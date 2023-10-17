@@ -1,0 +1,13 @@
+1. data input validation character ng nmae , age at email
+2. validation of email check existing
+3. other way to notify user for approve pre application
+4. stall description with size
+5. announcement featyres with category or subset (yung naka highlight lang pag click saka mag aappear ang buong announcemeny)
+6. pagelation and search function
+7. generation of report by category,log ,contract( pwede samAsama ang lahat pwedeng isa isa) yubg naka dropdown
+8. password complex and secure security.. weak, strong
+9. responsive
+10. maximize space
+11. dashboard for stall owner
+12. yung sa mga active change color of icon and other icon
+13. ayusin daw ang dashboard arrangment and color

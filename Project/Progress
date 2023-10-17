@@ -1,0 +1,23 @@
+Done
+1. data input validation character ng name, age at email
+2. password complex and secure security.. weak, strong
+
+Ongoing
+1. validation of email check existing
+2. other way to notify user for approval of pre-application
+3. generation of report by category,log ,contract( pwede sama-sama ang lahat pwedeng isa-isa) yung naka dropdown
+
+Not Started
+1. stall description with size
+2. announcement features with category or subset (yung naka highlight lang pag click saka mag aappear ang buong announcement)
+3. pagelation and search function
+4. responsive
+5. maximize space
+6. dashboard for stall owner
+7. yung sa mga active change color of icon and other icon
+8. ayusin daw ang dashboard arrangment and color
+
+Other notes:
+1. Minor changes in Database Dump File
+2. Minor bug and error fixes
+3. Error messages must be polish or specified
