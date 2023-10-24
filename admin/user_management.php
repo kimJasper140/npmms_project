@@ -335,9 +335,9 @@ include "checking_user.php";
 
             if (isValidName($name)){
                 if(isValidPassword($password)){
-                    $email_sql = "SELECT * FROM user WHERE email = '$email_'";
+                    $email_sql = "SELECT * FROM user WHERE email = '$email'";
                     $result = $conn->query($email_sql);
-                    if(emailExisting($result)){
+                    if(!emailExisting($result)){
                         $sql = "INSERT INTO user (name, email, address, username, password, roles, designation, status, dateCreated)
                             VALUES ('$name', '$email', '$address', '$username', '$password', '$role', '$designation', '$status', '$dateCreated')";
                         if ($conn->query($sql) === TRUE){

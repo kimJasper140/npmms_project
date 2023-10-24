@@ -217,7 +217,7 @@ $user = mysqli_fetch_assoc($UserResult);
             <li><a href="admin-setting.php"><i class="fas fa-cog"></i>Settings</a></li>
             <li>
                 <button style="background-color: transparent; border: none;" id="logout-btn" onclick="logout()">
-                    <a href="#">
+                    <a href="../logout.php">
                         <i class="fas fa-sign-out-alt"></i>Logout
                     </a>
                 </button>

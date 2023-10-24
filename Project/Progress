@@ -1,11 +1,19 @@
 Done
-1. data input validation character ng name, age at email
-2. password complex and secure security.. weak, strong
+Major Changes:
+    - data input validation character ng name, age at email
+    - password complex and secure security.. weak, strong
+
+Minor Changes:
+    - Fixed Logout
+
 
 Ongoing
-1. validation of email check existing
-2. other way to notify user for approval of pre-application
+1. validation of email check existing(Confirmation Code)
+2. other way to notify user for approval of pre-application(SMS or Messenger)
 3. generation of report by category,log ,contract( pwede sama-sama ang lahat pwedeng isa-isa) yung naka dropdown
+    - Time Sort
+4. Sa user side pala sa stall owner need makita ang last payment at violation graph(line graph) Sa user side dashboard Then sa admin side magkakaroon ng payment monitoring system na makakapag produce ng reports and invoces.[1]
+
 
 Not Started
 1. stall description with size
@@ -17,7 +25,13 @@ Not Started
 7. yung sa mga active change color of icon and other icon
 8. ayusin daw ang dashboard arrangment and color
 
+
 Other notes:
 1. Minor changes in Database Dump File
 2. Minor bug and error fixes
 3. Error messages must be polish or specified
+4. Magrereflect ang context ng contract sa user and admin side.[1]
+5. 1 month before contract expires[1]
+
+
+

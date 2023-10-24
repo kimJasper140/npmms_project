@@ -118,6 +118,7 @@ include "../tempplate/loading_screen.php";
     <div class="container" style="margin-top:5%;">
         <h2 class="mt-4">Online Payment</h2>
         <button type="button" class="btn btn-success" href="stall_rental/view_payment.php" >Payment History</button>
+        <button type="button" class="btn btn-success" href="">Payment Reports</button>
         <h3 class="mt-4">Payment Details</h3>
         
         <div class="table-responsive">
