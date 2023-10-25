@@ -52,9 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Verify the admin login before updating payment status
         if (verifyAdminLogin($adminEmail, $adminPassword)) {
             updatePaymentStatus($paymentId);
+            $sql = "SELECT stall_owner_id FROM payment_details WHERE id = '$paymentId'";
+            $soi = $conn->query($sql);
 
             // Insert notification
-            $stall_owner_id =  // Get the stall_owner_id of the verified payment
+            while ($row = $soi->fetch_assoc()) {
+                $stall_owner_id =  $row['stall_owner_id'];// Get the stall_owner_id of the verified payment
+            }
             $notificationMessage = "Your payment has been verified and processed.";
             $notificationTimestamp = date("Y-m-d H:i:s");
             $notificationDate = date("Y-m-d");
@@ -64,6 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare($query);
             $stmt->bind_param("issssi", $stall_owner_id, $notificationMessage, $notificationMessage, $notificationTimestamp, $notificationDate, $notificationSent);
             $stmt->execute();
+
+
+            if ($stmt->affected_rows > 0) {
+                $mysqli->commit();
+                echo "Data inserted successfully.";
+            } else {
+                $mysqli->rollback(); // Rollback if any query fails
+                echo "Data insertion failed.";
+            }
             $stmt->close();
 
             // Redirect to the same page to refresh the data
@@ -123,7 +136,7 @@ include "../tempplate/loading_screen.php";
 
     <div class="container" style="margin-top:5%;">
         <h2 class="mt-4">Online Payment</h2>
-        <button type="button" class="btn btn-success" href="#" >Payment History</button>
+        <button type="button" class="btn btn-success" onclick="showPage('monthly-payment.php')">Payment History</button>
         <button type="button" class="btn btn-success" onclick="showPage('payment_reports.php')">Payment Reports</button>
         <h3 class="mt-4">Payment Details</h3>
 

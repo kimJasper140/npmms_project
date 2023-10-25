@@ -304,13 +304,6 @@ include "checking_user.php";
         }
         return true;
     }
-    function emailExisting($email_count){
-        if($email_count > 0){
-            return false;
-        }
-
-        return true;
-    }
 
     include "../config/config.php";
     include "../admin/sidebar-admin.php";
@@ -337,15 +330,23 @@ include "checking_user.php";
                 if(isValidPassword($password)){
                     $email_sql = "SELECT * FROM user WHERE email = '$email'";
                     $result = $conn->query($email_sql);
-                    if(!emailExisting($result)){
-                        $sql = "INSERT INTO user (name, email, address, username, password, roles, designation, status, dateCreated)
+                    if($result->num_rows == 0){
+                        $uname_sql = "SELECT * FROM user WHERE username = '$username'";
+                        $uname_res = $conn->query($uname_sql);
+                        if($uname_res->num_rows == 0){
+                            $sql = "INSERT INTO user (name, email, address, username, password, roles, designation, status, dateCreated)
                             VALUES ('$name', '$email', '$address', '$username', '$password', '$role', '$designation', '$status', '$dateCreated')";
-                        if ($conn->query($sql) === TRUE){
-                            echo "<script>alert('User added successfully');</script>";
-                            echo "<script>window.location.href = '{$_SERVER['PHP_SELF']}';</script>";
+                            if ($conn->query($sql) === TRUE){
+                                echo "<script>alert('User added successfully');</script>";
+                                echo "<script>window.location.href = '{$_SERVER['PHP_SELF']}';</script>";
+                            }else {
+                                echo "<script>alert('Error: ' . $conn->error);</script>";
+                            }
                         }else {
-                            echo "<script>alert('Error: ' . $conn->error);</script>";
+                            echo "<script>alert('Username had been already taken. Please use another username.');</script>";
+                            echo "<script>window.location.href = '{$_SERVER['PHP_SELF']}';</script>";
                         }
+
                     } else {
                         echo "<script>alert('Email already exists');</script>";
                         echo "<script>window.location.href = '{$_SERVER['PHP_SELF']}';</script>";
