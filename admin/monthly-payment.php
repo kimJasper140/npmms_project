@@ -16,6 +16,7 @@ function getPaymentData()
     return $data;
 }
 
+
 // Function to update the payment status in the database
 function updatePaymentStatus($paymentId)
 {
@@ -64,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param("issssi", $stall_owner_id, $notificationMessage, $notificationMessage, $notificationTimestamp, $notificationDate, $notificationSent);
             $stmt->execute();
             $stmt->close();
-            
+
             // Redirect to the same page to refresh the data
             header('Location: ' . $_SERVER['PHP_SELF']);
             exit;
@@ -112,15 +113,20 @@ include "../tempplate/loading_screen.php";
             height: auto;
         }
     </style>
+    <script>
+            function showPage(url){
+                window.location.href = url;
+            }
+    </script>
 </head>
 <body>
 
     <div class="container" style="margin-top:5%;">
         <h2 class="mt-4">Online Payment</h2>
-        <button type="button" class="btn btn-success" href="stall_rental/view_payment.php" >Payment History</button>
-        <button type="button" class="btn btn-success" href="">Payment Reports</button>
+        <button type="button" class="btn btn-success" href="#" >Payment History</button>
+        <button type="button" class="btn btn-success" onclick="showPage('payment_reports.php')">Payment Reports</button>
         <h3 class="mt-4">Payment Details</h3>
-        
+
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
