@@ -6,9 +6,6 @@ include "config/config.php";
 
 <head>
     <title>Lease Application Form</title>
-
-
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -114,6 +111,7 @@ include "header-home.php";
         </p>
 
         <?php
+
         function isValidName($name_) {
             return preg_match("/^[A-Za-z\-\'\s]+$/", $name_);
         }
@@ -132,9 +130,17 @@ include "header-home.php";
             }
             return true;
         }
+        function existingCredentrials($checksql){
+            include "config/config.php";
+            $result = $conn->query($checksql);
+            if($result->num_rows == 0){
+                return false;
+            }
+            return true;
+        }
         $error = "";
 
-        include "config/config.php";
+
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stallNo = $_POST["stall_no"];
@@ -150,6 +156,8 @@ include "header-home.php";
             $email = $_POST["email"];
             $Contact = $_POST["Contact"];
             $status = "pending";
+            $my_sql = "SELECT * FROM applications WHERE name = '$name' OR email = '$email'";
+
 
             // Validate form inputs
             if (
@@ -170,7 +178,9 @@ include "header-home.php";
                 echo "<script>alert('Entered age is not valid for application.');</script>";
             } else if(!isValidEmail($email)){
                 echo "<script>alert('Invalid email');</script>";
-            }else {
+            } else if(existingCredentrials($my_sql)) {
+                echo "<script>alert('It seems that you already file an application.');</script>";
+            }else{
                 // Prepare and bind SQL statement
                 $stmt = $conn->prepare(
                     "INSERT INTO applications (stall_no, name, age, address, applicant_name, stall_no2, applicant_age, applicant_address, tax_certificate_issued_location, tax_certificate_issued_date, sworn_at, email, contact, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)"
