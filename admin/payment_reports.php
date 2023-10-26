@@ -86,7 +86,6 @@ include "../tempplate/loading_screen.php";
                     <thead>
                         <tr>
                             <th>Reference #</th>
-                            <th>Title</th>
                             <th>Description</th>
                             <th>Amount</th>
                             <th>Date</th>
@@ -99,7 +98,6 @@ include "../tempplate/loading_screen.php";
                         <?php foreach ($paymentData as $payment) : ?>
                             <tr>
                                 <td><?php echo $payment['transaction_id']; ?></td>
-                                <td><?php echo $payment['transaction_title']; ?></td>
                                 <td><?php echo $payment['description']; ?></td>
                                 <td><?php echo $payment['price']; ?></td>
                                 <td><?php echo $payment['transaction_date']; ?></td>
