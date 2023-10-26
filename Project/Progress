@@ -2,28 +2,23 @@ Done
 Major Changes:
     - data input validation character ng name, age at email
     - password complex and secure security.. weak, strong
+    - validation of email check existing(Confirmation Code)
 
 Minor Changes:
     - Fixed Logout
+    - Added additional application checking method
 
 
 Ongoing
-1. validation of email check existing(Confirmation Code)
-2. other way to notify user for approval of pre-application(SMS or Messenger)
-3. generation of report by category,log ,contract( pwede sama-sama ang lahat pwedeng isa-isa) yung naka dropdown
+1. generation of report by category,log ,contract( pwede sama-sama ang lahat pwedeng isa-isa) yung naka dropdown
     - Time Sort
-4. Sa user side pala sa stall owner need makita ang last payment at violation graph(line graph) Sa user side dashboard Then sa admin side magkakaroon ng payment monitoring system na makakapag produce ng reports and invoces.[1]
+2. Sa user side pala sa stall owner need makita ang last payment at violation graph(line graph) Sa user side dashboard Then sa admin side magkakaroon ng payment monitoring system na makakapag produce ng reports and invoces.[1]
 
 
 Not Started
 1. stall description with size
 2. announcement features with category or subset (yung naka highlight lang pag click saka mag aappear ang buong announcement)
 3. pagelation and search function
-4. responsive
-5. maximize space
-6. dashboard for stall owner
-7. yung sa mga active change color of icon and other icon
-8. ayusin daw ang dashboard arrangment and color
 
 
 Other notes:
@@ -32,6 +27,15 @@ Other notes:
 3. Error messages must be polish or specified
 4. Magrereflect ang context ng contract sa user and admin side.[1]
 5. 1 month before contract expires[1]
+6. Integer-based inputs causes error if string was entered
+
+For Frontend:
+1. responsive
+2. maximize space
+3. dashboard for stall owner
+4. yung sa mga active change color of icon and other icon
+5. ayusin daw ang dashboard arrangment and color
+
 
 
 

@@ -111,6 +111,14 @@ include "header-home.php";
         </p>
 
         <?php
+        include "config/config.php";
+        use PHPMailer\PHPMailer\PHPMailer;
+        use PHPMailer\PHPMailer\Exception;
+        use PHPMailer\PHPMailer\SMTP;
+
+        require __DIR__ . '/phpmailer/src/Exception.php';
+        require __DIR__ . '/phpmailer/src/PHPMailer.php';
+        require __DIR__ . '/phpmailer/src/SMTP.php';
 
         function isValidName($name_) {
             return preg_match("/^[A-Za-z\-\'\s]+$/", $name_);
@@ -138,21 +146,33 @@ include "header-home.php";
             }
             return true;
         }
-        function validateEmail($insertedEmail){
+        function validateEmail($insertedEmail, $target_name){
+            $mail = new PHPMailer(true);
             $code = rand(100000,999999);
-            $to = "$insertedEmail";
-            $subject = "Application Validation";
-            $message = "Please do not delete the validation code below:\n\n";
-            $message .= "Validation Code: $code";
-            $headers = "From: gerryvienlifeflores@gmail.com" . "\r\n";
-            $headers .= "Reply-To: $insertedEmail" . "\r\n";
-            $headers .= "Content-Type: text/plain; charset=UTF-8" . "\r\n";
 
-            // Send the email
-            if (mail($to, $subject, $message, $headers)) {
-                echo "Email sent successfully.";
-            } else {
-                echo "Email sending failed.";
+            try {
+                // Server settings
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';          // Gmail SMTP server
+                $mail->SMTPAuth = true;
+                $mail->Username = 'publicmarketnaujan@gmail.com'; // Your Gmail email address
+                $mail->Password = 'lwtywoqkuzatemxx';       // Your Gmail password
+                $mail->SMTPSecure = "ssl"; // Enable SSL encryption
+                $mail->Port = 465;                        // TCP port to connect to
+
+                // Recipients
+                $mail->setFrom('publicmarketnaujan@gmail.com', 'Naujan Public Market'); // Sender's email address and name
+                $mail->addAddress($insertedEmail, $target_name); // Recipient's email address and name
+
+                // Content
+                $mail->isHTML(true);
+                $mail->Subject = 'Verification Code';
+                $mail->Body = "This is your verification code: $code";
+
+                $mail->send();
+                echo "<script>alert('The verification code had been sent to your email.')</script>";
+            } catch (Exception $e) {
+                echo " ";
             }
         }
         $error = "";
@@ -198,6 +218,7 @@ include "header-home.php";
             } else if(existingCredentrials($my_sql)) {
                 echo "<script>alert('It seems that you already file an application.');</script>";
             }else{
+                validateEmail($email, $name);
                 // Prepare and bind SQL statement
                 $stmt = $conn->prepare(
                     "INSERT INTO applications (stall_no, name, age, address, applicant_name, stall_no2, applicant_age, applicant_address, tax_certificate_issued_location, tax_certificate_issued_date, sworn_at, email, contact, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)"
@@ -218,7 +239,6 @@ include "header-home.php";
                     $Contact,
                     $status
                 );
-                validateEmail($email);
                 // Execute the statement
                 if ($stmt->execute() === TRUE) {
                     // Display success message
