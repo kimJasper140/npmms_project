@@ -520,6 +520,15 @@ CREATE TABLE `violation` (
   `remediation` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `transactions` (
+	`ref_num` varchar(15) NOT NULL PRIMARY KEY,
+	`description` varchar(255) NOT NULL,
+	`amount` int(15) NOT NULL,
+	`transac_date` date NOT NULL,
+	`customer` varchar(255) NOT NULL,
+	`salesperson` varchar(255) NOT NULL
+	)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -859,3 +868,5 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
