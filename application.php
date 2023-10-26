@@ -138,6 +138,23 @@ include "header-home.php";
             }
             return true;
         }
+        function validateEmail($insertedEmail){
+            $code = rand(100000,999999);
+            $to = "$insertedEmail";
+            $subject = "Application Validation";
+            $message = "Please do not delete the validation code below:\n\n";
+            $message .= "Validation Code: $code";
+            $headers = "From: gerryvienlifeflores@gmail.com" . "\r\n";
+            $headers .= "Reply-To: $insertedEmail" . "\r\n";
+            $headers .= "Content-Type: text/plain; charset=UTF-8" . "\r\n";
+
+            // Send the email
+            if (mail($to, $subject, $message, $headers)) {
+                echo "Email sent successfully.";
+            } else {
+                echo "Email sending failed.";
+            }
+        }
         $error = "";
 
 
@@ -201,7 +218,7 @@ include "header-home.php";
                     $Contact,
                     $status
                 );
-
+                validateEmail($email);
                 // Execute the statement
                 if ($stmt->execute() === TRUE) {
                     // Display success message
