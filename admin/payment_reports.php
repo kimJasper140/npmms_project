@@ -162,6 +162,7 @@ include "../tempplate/loading_screen.php";
                     <div class="modal-body">
                         <form method="post">
                             <div class="form-group">
+                                <input type=hidden name="id" id="edit_id">
                                 <label for="admin_email">Email: </label>
                                 <input type="email" class="form-control" id="admin_email" name="admin_email" required>
                             </div>

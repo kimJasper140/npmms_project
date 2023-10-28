@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "config/config.php";
 ?>
 <!DOCTYPE html>
@@ -94,6 +95,39 @@ include "config/config.php";
                 box-sizing: border-box;
             }
         }
+        /* Styling for the modal container */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            top: 50%;
+            background-color: rgba(0,0,0,0.7);
+            width: 200px;
+            padding: 200px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        /* Styling for the modal content */
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Close button styling */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <?php
@@ -149,6 +183,7 @@ include "header-home.php";
         function validateEmail($insertedEmail, $target_name){
             $mail = new PHPMailer(true);
             $code = rand(100000,999999);
+            $_SESSION['v_code'] = $code;
 
             try {
                 // Server settings
@@ -170,29 +205,28 @@ include "header-home.php";
                 $mail->Body = "This is your verification code: $code";
 
                 $mail->send();
-                echo "<script>alert('The verification code had been sent to your email.')</script>";
+                return true;
             } catch (Exception $e) {
                 echo " ";
+                return false;
             }
         }
-        $error = "";
-
-
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $stallNo = $_POST["stall_no"];
-            $name = $_POST["name"];
-            $age = $_POST["age"];
-            $address = $_POST["applicant_address"];
-            $applicantName = $_POST["applicant_name"];
-            $stallNo2 = $_POST["stall_no2"];
-            $applicantAge = $_POST["applicant_age"];
-            $applicantAddress = $_POST["applicant_address"];
-            $taxCertificateIssuedLocation = $_POST["tax_certificate_issued_location"];
-            $taxCertificateIssuedDate = $_POST["tax_certificate_issued_date"];
-            $email = $_POST["email"];
-            $Contact = $_POST["Contact"];
-            $status = "pending";
+            $stallNo = $_POST["stall_no"]; $_SESSION['stall'] = $stallNo;
+            $name = $_POST["name"]; $_SESSION['_name'] = $name;
+            $age = $_POST["age"]; $_SESSION['_age'] = $age;
+            $address = $_POST["applicant_address"];$_SESSION['_address'] = $address;
+            $applicantName = $_POST["applicant_name"]; $_SESSION['appName'] = $applicantName;
+            $stallNo2 = $_POST["stall_no2"]; $_SESSION['stall2'] = $stallNo2;
+            $applicantAge = $_POST["applicant_age"]; $_SESSION['appAge'] = $applicantAge;
+            $applicantAddress = $_POST["applicant_address"]; $_SESSION['appAdd'] = $applicantAddress;
+            $taxCertificateIssuedLocation = $_POST["tax_certificate_issued_location"]; $_SESSION['tcil'] = $taxCertificateIssuedLocation;
+            $taxCertificateIssuedDate = $_POST["tax_certificate_issued_date"]; $_SESSION['tcid'] = $taxCertificateIssuedDate;
+            $email = $_POST["email"]; $_SESSION['_email'] = $email;
+            $Contact = $_POST["Contact"]; $_SESSION['_contact'] = $Contact;
+            $status = "pending"; $_SESSION['Stats'] = $status;
+            header("Location: app_verification.php");
             $my_sql = "SELECT * FROM applications WHERE name = '$name' OR email = '$email'";
 
 
@@ -208,51 +242,19 @@ include "header-home.php";
                 empty($taxCertificateIssuedLocation) ||
                 empty($taxCertificateIssuedDate)
             ) {
-                $error = "Please fill in all the required fields.";
+                echo "<p class style='color:red'>Please fill in all the required fields.)</p>";
             } else if(!isValidName($name)){
-                echo "<script>alert('Invalid name format.');</script>";
+                echo "<p class style='color:red'>Invalid name format.</p>";
             } else if(!isValidAge($age)){
-                echo "<script>alert('Entered age is not valid for application.');</script>";
+                echo "<p class style='color:red'>Entered age is not valid for application.</p>";
             } else if(!isValidEmail($email)){
-                echo "<script>alert('Invalid email');</script>";
+                echo "<p class style='color:red'>Invalid email address.</p>";
             } else if(existingCredentrials($my_sql)) {
-                echo "<script>alert('It seems that you already file an application.');</script>";
-            }else{
-                validateEmail($email, $name);
-                // Prepare and bind SQL statement
-                $stmt = $conn->prepare(
-                    "INSERT INTO applications (stall_no, name, age, address, applicant_name, stall_no2, applicant_age, applicant_address, tax_certificate_issued_location, tax_certificate_issued_date, sworn_at, email, contact, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)"
-                );
-                $stmt->bind_param(
-                    "ssissssssssss",
-                    $stallNo,
-                    $name,
-                    $age,
-                    $address,
-                    $applicantName,
-                    $stallNo2,
-                    $applicantAge,
-                    $applicantAddress,
-                    $taxCertificateIssuedLocation,
-                    $taxCertificateIssuedDate,
-                    $email,
-                    $Contact,
-                    $status
-                );
-                // Execute the statement
-                if ($stmt->execute() === TRUE) {
-                    // Display success message
-                    echo '<script>alert("Pre-application Submitted Naujan Public Market Will Call You for further Requirements!");</script>';
-                    // Insert notification details
-                    $notificationMessage = "New Pre-application submitted by. " . $applicantName;
-                    $insertQuery = "INSERT INTO notifications (message, read_status) VALUES ('$notificationMessage', 0)";
-                    mysqli_query($conn, $insertQuery);
-                } else {
-                    $error = "Error: " . $stmt->error;
-                }
-
-                // Close statement
-                $stmt->close();
+                echo "<p class style='color:red'>It seems that you already file an application.</p>";
+            } else if(!validateEmail($email, $name)){
+                echo "<p class style='color:red'>Unable to send code. Please contact the administrator.</p>";
+            } else {
+                echo "<script>window.onload = function() { openModal(); }</script>";
             }
         }
 
@@ -298,12 +300,6 @@ include "header-home.php";
             <input type="text" id="email" name="email" required><br>
 
             <br>
-
-            <?php
-            if (!empty($error)) {
-                echo "<p style='color: red;'>$error</p>";
-            }
-            ?>
             <br>
             <br>
             <br>
@@ -535,6 +531,55 @@ include "header-home.php";
             <input type="submit" value="Submit Application" style=" display: block;margin: auto;">
         </form>
     </div>
+
+    <!--Email Confirmation Modal--->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form action="app_verification.php" method = "POST">
+                <h2>Email Confirmation</h2>
+                <p>Please check your email and enter the verification code below: </p>
+                <input type="input" name="inputCode" placeholder="Code">
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to open the modal
+        function openModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        function handleError(err) {
+            err_msg.style.display = "block";
+
+            // Create a new AJAX request
+            var xhr = new XMLHttpRequest();
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            // Define a callback function to handle the server's response
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Handle the server's response
+                    var response = xhr.responseText;
+                }
+            };
+
+            // Send the data to the server
+            xhr.open("POST", "error_handler.php", true);
+            xhr.send("data=" + err);
+        }
+</script>
+
+
 </body>
 
 </html>

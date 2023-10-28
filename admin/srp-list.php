@@ -266,9 +266,8 @@ if (isset($_GET['delete'])) {
 
         // Display data in the table
         if ($result->num_rows > 0) {
-            echo '<table>';
+            echo '<table class="table table-bordered">';
             echo '<tr>';
-            echo '<th>Id</th>';
             echo '<th>Product Name</th>';
             echo '<th>Price</th>';
             echo '<th>Date</th>';
@@ -278,7 +277,6 @@ if (isset($_GET['delete'])) {
 
             while ($row = $result->fetch_assoc()) {
                 echo '<tr>';
-                echo '<td>' . $row['id'] . '</td>';
                 echo '<td>' . $row['product_name'] . '</td>';
                 echo '<td>' . $row['price'] . '</td>';
                 echo '<td>' . $row['date'] . '</td>';
@@ -317,7 +315,7 @@ if (isset($_GET['delete'])) {
                 <input type="hidden" name="id" id="edit_id">
                 <input type="text" name="product_name" id="edit_product_name" placeholder="Product Name" required><br><br>
                 <input type="number" name="price" id="edit_price" placeholder="Price" required><br><br>
-                <input type="file" name="image"><br><br>
+                <input type="file" name="image" id="edit_image"><br><br>
                 <input type="submit" name="edit" value="Edit">
             </form>
         </div>

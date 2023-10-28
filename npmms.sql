@@ -521,7 +521,8 @@ CREATE TABLE `violation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `transactions` (
-	`ref_num` varchar(15) NOT NULL PRIMARY KEY,
+    `id` varchar(11) NOT NULL PRIMARY KEY,
+	`ref_num` varchar(15) NOT NULL,
 	`description` varchar(255) NOT NULL,
 	`amount` int(15) NOT NULL,
 	`transac_date` date NOT NULL,
@@ -870,6 +871,7 @@ ALTER TABLE `applications`
 
 ALTER TABLE `srp`
     MODIFY `product_category` varchar(50) DEFAULT NULL;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
