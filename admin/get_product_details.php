@@ -19,6 +19,8 @@ if (isset($_GET['id'])) {
   }
 }
 
+
 // Close the database connection
 $conn->close();
+
 ?>

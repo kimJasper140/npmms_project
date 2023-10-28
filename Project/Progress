@@ -26,8 +26,9 @@ Other notes:
 2. Minor bug and error fixes
 3. Error messages must be polish or specified
 4. Magrereflect ang context ng contract sa user and admin side.[1]
-5. 1 month before contract expires[1]
+5. 1 month before contract expires[1], Expiration contract form
 6. Integer-based inputs causes error if string was entered
+7. Fix SRP Edit
 
 For Frontend:
 1. responsive

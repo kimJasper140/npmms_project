@@ -268,6 +268,7 @@ if (isset($_GET['delete'])) {
         if ($result->num_rows > 0) {
             echo '<table>';
             echo '<tr>';
+            echo '<th>Id</th>';
             echo '<th>Product Name</th>';
             echo '<th>Price</th>';
             echo '<th>Date</th>';
@@ -277,11 +278,12 @@ if (isset($_GET['delete'])) {
 
             while ($row = $result->fetch_assoc()) {
                 echo '<tr>';
+                echo '<td>' . $row['id'] . '</td>';
                 echo '<td>' . $row['product_name'] . '</td>';
                 echo '<td>' . $row['price'] . '</td>';
                 echo '<td>' . $row['date'] . '</td>';
                 echo '<td><img src="../image/' . $row['image'] . '" height="50"></td>';
-                echo '<td><a class="edit-button" href="javascript:void(0)" onclick="openEditModal(' . $row['id'] . ')">Edit</a> <a class="delete-button" href="?delete=' . $row['id'] . '">Delete</a></td>';
+                echo '<td><a class="edit-button" href="javascript:void(0)" onclick="openEditModal('.$row['id']. ')">Edit</a> <a class="delete-button" href="?delete=' . $row['id'] . '">Delete</a></td>';
                 echo '</tr>';
             }
 
@@ -311,7 +313,7 @@ if (isset($_GET['delete'])) {
         <div class="modal-content">
             <span class="close" onclick="closeEditModal()">&times;</span>
             <h2>Edit Product</h2>
-            <form id="modalForm" action="" method="post" enctype="multipart/form-data">
+            <form id="modalForm" action="edit_product.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" id="edit_id">
                 <input type="text" name="product_name" id="edit_product_name" placeholder="Product Name" required><br><br>
                 <input type="number" name="price" id="edit_price" placeholder="Price" required><br><br>
@@ -339,7 +341,7 @@ if (isset($_GET['delete'])) {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.responseText);
                     if (response !== null) {
-                        document.getElementById("edit_id").value = response.id;
+                        document.getElementById("edit_id").value = id;
                         document.getElementById("edit_product_name").value = response.product_name;
                         document.getElementById("edit_price").value = response.price;
 
