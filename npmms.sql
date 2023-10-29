@@ -475,7 +475,7 @@ CREATE TABLE `stall_owner_contract` (
 
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
-  `profile` varchar(255) NOT NULL,
+  `profile` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
@@ -485,7 +485,7 @@ CREATE TABLE `user` (
   `designation` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `dateCreated` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=UTF8MB4_GENERAL_CI;
 
 --
 -- Dumping data for table `user`
@@ -521,14 +521,20 @@ CREATE TABLE `violation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `transactions` (
-    `id` varchar(11) NOT NULL PRIMARY KEY,
-	`ref_num` varchar(15) NOT NULL,
-	`description` varchar(255) NOT NULL,
-	`amount` int(15) NOT NULL,
-	`transac_date` date NOT NULL,
-	`customer` varchar(255) NOT NULL,
-	`salesperson` varchar(255) NOT NULL
+   `id` INT(2) NOT NULL PRIMARY KEY,
+	`months` varchar(15) NOT NULL,
+	`salesCount` int(11) NOT NULL,
+	`paidCount` int(11) NOT NULL,
+	`unpaidCount` int(11) NOT NULL,
+	`stallLeased` int(11) NOT NULL,
+	`years` YEAR(4) NOT NULL
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+	
+INSERT INTO `transactions` (id, months, salesCount, paidCount, unpaidCount, stallLeased, years) VALUES (1,'January',0,0,0,0,2023), 
+(2,'February',0,0,0,0,2023), (3,'March',0,0,0,0,2023), (4,'April',0,0,0,0,2023), (5,'May',0,0,0,0,2023), 
+(6,'June',0,0,0,0,2023), (7,'July',0,0,0,0,2023), (8,'August',0,0,0,0,2023),(9,'September',0,0,0,0,2023),
+(10,'October',0,0,0,0,2023), (11,'November',0,0,0,0,2023),(12,'December',0,0,0,0,2023);
+
 
 --
 -- Indexes for dumped tables

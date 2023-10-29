@@ -21,8 +21,27 @@ function getPaymentData()
 function updatePaymentStatus($paymentId)
 {
     global $conn;
+	$currentMonth = date('F');
+	$paidCount = 0;
     $sql = "UPDATE payment_details SET status = 'Paid' WHERE id = $paymentId";
-    return $conn->query($sql);
+	$paidCount += 1;
+	$obtainSql = "SELECT paidCount FROM transactions WHERE months='$currentMonth'";
+    
+	
+	$result = mysqli_query($conn, $obtainSql);
+
+	if ($result) {
+		while ($row = mysqli_fetch_assoc($result)) {
+			$value = $row['paidCount'];
+			$value += 1;
+			$updateCount = "UPDATE transactions SET paidCount = '$value', sales = '$value', stallLeased = '$value' WHERE months = '$currentMonth'";
+			$conn->query($updateCount);
+		}
+	} else {
+		echo "Error: " . mysqli_error($conn);
+	}
+	
+	return $conn->query($sql);
 }
 
 // Function to verify the admin login without hashing passwords (not recommended for production)
@@ -158,6 +177,18 @@ include "../tempplate/loading_screen.php";
                 </thead>
                 <tbody>
                     <?php foreach ($paymentData as $payment) : ?>
+					<?php 
+						require_once '../config/config.php';
+						$query = "SELECT COUNT(*) AS rowCount FROM payment_details";
+						$result = mysqli_query($conn, $query);
+						$currentMonth = date('F');
+						if ($result) {
+							$row = mysqli_fetch_assoc($result);
+							$rowCount = $row['rowCount'];
+							$updateQuery = "UPDATE transactions SET unpaidCount = '$rowCount' WHERE months = '$currentMonth'";
+							$conn->query($updateQuery);
+						}
+					?>
                         <tr>
                             <td><?php echo $payment['id']; ?></td>
                             <td><?php echo $payment['account_name']; ?></td>

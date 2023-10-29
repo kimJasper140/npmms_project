@@ -80,32 +80,33 @@ include "../tempplate/loading_screen.php";
             <button type="button" class="btn btn-success" onclick="showPage('monthly-payment.php')" >Payment History</button>
             <button type="button" class="btn btn-success" onclick="showPage('payment_reports.php')">Payment Reports</button>
             <h3 class="mt-4">Transaction Log</h3>
+			<select input type = "text" name = "announcement" id = "category" class = "category_dropdown" required>
+				<option value="default">Filter by</option>
+			</select>
 
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Reference #</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                            <th>Customer Name</th>
-                            <th>Salesperson</th>
+                            <th>Month</th>
+                            <th>Sales</th>
+                            <th>Paid</th>
+                            <th>Unpaid</th>
+                            <th>Leased</th>
                             <th>Action</th> <!-- Add a new column for the action button -->
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($paymentData as $payment) : ?>
                             <tr>
-                                <td><?php echo $payment['transaction_id']; ?></td>
-                                <td><?php echo $payment['description']; ?></td>
-                                <td><?php echo $payment['price']; ?></td>
-                                <td><?php echo $payment['transaction_date']; ?></td>
-                                <td><?php echo $payment['customer_name']; ?></td>
-                                <td><?php echo $payment['admin_name']?></td>
+                                <td><?php echo $payment['months']; ?></td>
+                                <td><?php echo $payment['salesCount']; ?></td>
+                                <td><?php echo $payment['paidCount']; ?></td>
+                                <td><?php echo $payment['unpaidCount']; ?></td>
+                                <td><?php echo $payment['stallLeased']; ?></td>
                                 <td>
-                                    <button type = "button" class = "btn btn-success" style = "margin: 2px;">Generate Invoice</button>
-                                    <button type = "button" class = "btn btn-success" style = "margin: 2px;" data-toggle="modal" data-target="#adminLoginModal">Delete Record</button>
+                                    <button type = "button" class = "btn btn-success" style = "margin: 2px;">Generate Report</button>
+                                    <button type = "button" class = "btn btn-success" style = "margin: 2px;" data-toggle="modal" data-target="#adminLoginModal">Edit Record</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -170,8 +171,8 @@ include "../tempplate/loading_screen.php";
                                 <label for="admin_password">Password</label>
                                 <input type="password" class="form-control" id="admin_password" name="admin_password" required>
                             </div>
-                            <input type="hidden" name="payment_id" id="payment_id">
-                            <button type="submit" class="btn btn-primary" name="verify_payment">Verify Payment</button>
+                            <input type="hidden" name="report_id" id="report_id">
+                            <button type="submit" class="btn btn-primary" name="edit_report">Edit Report</button>
                         </form>
                     </div>
                 </div>
