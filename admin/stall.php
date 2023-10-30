@@ -174,7 +174,6 @@ include "checking_user.php";?>
                     .append('<h2>Stall Number: ' + stall.stall_number + '</h2>')
                     .append('<p>Category: ' + stall.category + '</p>')
                     .append('<p>Status: ' + stall.status + '</p>');
-
                 stallList.append(stallCard);
             });
         }

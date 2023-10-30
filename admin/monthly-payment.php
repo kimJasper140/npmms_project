@@ -34,7 +34,7 @@ function updatePaymentStatus($paymentId)
 		while ($row = mysqli_fetch_assoc($result)) {
 			$value = $row['paidCount'];
 			$value += 1;
-			$updateCount = "UPDATE transactions SET paidCount = '$value', sales = '$value', stallLeased = '$value' WHERE months = '$currentMonth'";
+			$updateCount = "UPDATE transactions SET paidCount = '$value', salesCount = '$value', stallLeased = '$value' WHERE months = '$currentMonth'";
 			$conn->query($updateCount);
 		}
 	} else {
@@ -179,7 +179,7 @@ include "../tempplate/loading_screen.php";
                     <?php foreach ($paymentData as $payment) : ?>
 					<?php 
 						require_once '../config/config.php';
-						$query = "SELECT COUNT(*) AS rowCount FROM payment_details";
+						$query = "SELECT COUNT(*) AS rowCount FROM payment_details WHERE status = 'Pending'";
 						$result = mysqli_query($conn, $query);
 						$currentMonth = date('F');
 						if ($result) {

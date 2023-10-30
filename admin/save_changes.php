@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['stallImage']) && is_
     // Get the stall number and section from the form data
     $stallNo = mysqli_real_escape_string($conn, $_POST['availableStallNo']);
     $section = mysqli_real_escape_string($conn, $_POST['stallSection']);
+	$size = mysqli_real_escape_string($conn, $_POST['stallSize']);
 
     // Image upload and move it to a designated folder
     $targetDir = 'Stall_image/'; // Replace with your desired upload directory
@@ -17,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['stallImage']) && is_
     if (in_array($imageFileType, $allowedExtensions)) {
         if (move_uploaded_file($_FILES['stallImage']['tmp_name'], $targetFile)) {
             // Update the image path and other details in the database
-            $updateQuery = "UPDATE available_stall SET image = '$targetFile', section = '$section' WHERE stall_no = '$stallNo'";
+            $updateQuery = "UPDATE available_stall SET image = '$targetFile', section = '$section', size = '$size' WHERE stall_no = '$stallNo'";
             if (mysqli_query($conn, $updateQuery)) {
                 echo "<script>alert('Image added Success');</script>";
                 echo "<script>window.location.href = 'setting-stall.php';</script>";// Send success response back to the client

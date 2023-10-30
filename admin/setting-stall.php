@@ -107,6 +107,7 @@ include "topbar.php";
                         echo '<img src="' . htmlspecialchars($row['image']) . '" class="stall-image">';
                         echo '<div class="stall-no">Stall Number: ' . htmlspecialchars($row['stall_no']) . '</div>';
                         echo '<div>Status: ' . ucfirst(htmlspecialchars($row['status'])) . '</div>';
+						echo '<div>Size: ' . htmlspecialchars($row['size']). '</div>';
                         echo '</div>';
                     }
                     echo '</div>';
@@ -178,6 +179,10 @@ include "topbar.php";
                         <label for="newStallNo" class="form-label">Stall Number</label>
                         <input type="text" class="form-control" id="newStallNo" name="newStallNo" required>
                     </div>
+					<div class="mb-3">
+						<label for="newStallSize" class="form-label">Stall Size</label>
+						<input type="text" class="form-control" id = "newStallSize" name = "newStallSize">
+					</div>
                     <div class="mb-3">
                         <label for="newStallSection" class="form-label">Section</label>
                         <select class="form-control" id="newStallSection" name="newStallSection" required>
@@ -219,6 +224,10 @@ include "topbar.php";
                         <label for="availableStallNo" class="form-label">Stall Number</label>
                         <input type="text" class="form-control" id="availableStallNo" name="availableStallNo">
                     </div>
+					<div class="mb-3">
+						<label for="stallSize" class="form-label">Stall Size</label>
+						<input type="text" class="form-control" id = "stallSize" name = "stallSize">
+					</div>
                     <div class="mb-3">
                         <label for="stallSection" class="form-label">Section</label>
                         <select class="form-control" id="stallSection" name="stallSection">
@@ -292,6 +301,42 @@ include "topbar.php";
         }
 
         document.getElementById('editForm').submit();
+    }
+	
+	function addNewStall() {
+		var new_image = document.getElementById('newStallImage').value;
+		var new_num = document.getElementById('newStallNo').value;
+		var new_size = document.getElementById('newStallSize').value;
+		
+		if (!new_image || !new_num || !new_size) {
+            alert('Please fill in all fields.');
+            return;
+        }
+		
+		const form = document.getElementById('addForm');
+		const formData = new FormData(form);
+		formData.get("newStallImage");
+		formData.get("newStallNo");
+		formData.get("newStallSize");
+		
+
+		fetch("add_stall.php", {
+			method: "POST",
+			body: formData,
+		})
+		.then((response) => response.json())
+		.then((data) => {
+			if (data.success) {
+				alert("Data inserted successfully");
+		  } else {
+				alert("Error: " + data.message);
+		  }
+		})
+		.catch((error) => {
+		  console.error("Error:", error);
+		});
+
+        document.getElementById('addForm').submit();
     }
 
     // Event delegation for dynamically added stall cards

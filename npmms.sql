@@ -110,6 +110,7 @@ CREATE TABLE `available_stall` (
   `stall_no` int(11) NOT NULL,
   `section` varchar(100) NOT NULL,
   `status` enum('available','unavailable') NOT NULL,
+  `size` VARCHAR(100) DEFAULT NULL,
   `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -521,7 +522,6 @@ CREATE TABLE `violation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `transactions` (
-   `id` INT(2) NOT NULL PRIMARY KEY,
 	`months` varchar(15) NOT NULL,
 	`salesCount` int(11) NOT NULL,
 	`paidCount` int(11) NOT NULL,
@@ -535,7 +535,10 @@ INSERT INTO `transactions` (id, months, salesCount, paidCount, unpaidCount, stal
 (6,'June',0,0,0,0,2023), (7,'July',0,0,0,0,2023), (8,'August',0,0,0,0,2023),(9,'September',0,0,0,0,2023),
 (10,'October',0,0,0,0,2023), (11,'November',0,0,0,0,2023),(12,'December',0,0,0,0,2023);
 
-
+INSERT INTO `transactions` (months, salesCount, paidCount, unpaidCount, stallLeased, years) VALUES ('January',0,0,0,0,2024), 
+('February',0,0,0,0,2024), ('March',0,0,0,0,2024), ('April',0,0,0,0,2024), ('May',0,0,0,0,2024), 
+('June',0,0,0,0,2024), ('July',0,0,0,0,2024), ('August',0,0,0,0,2024),('September',0,0,0,0,2024),
+('October',0,0,0,0,2024), ('November',0,0,0,0,2024),('December',0,0,0,0,2024);
 --
 -- Indexes for dumped tables
 --

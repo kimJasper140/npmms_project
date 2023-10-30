@@ -103,6 +103,7 @@ include "header-home.php";
                         echo '<img src="admin/'. htmlspecialchars($row['image']) . '" class="stall-image">';
                         echo '<div class="stall-no">Stall Number: ' . htmlspecialchars($row['stall_no']) . '</div>';
                         echo '<div>Status: ' . ucfirst(htmlspecialchars($row['status'])) . '</div>';
+						echo '<div>Size: ' . ucfirst(htmlspecialchars($row['size'])) . '</div>';
                         echo '</div>';
                     }
                     echo '</div>';

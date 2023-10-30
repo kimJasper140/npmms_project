@@ -4,7 +4,7 @@
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database connection
-    include "config/config.php";
+    include "../config/config.php";
 
     // Function to sanitize and validate input data
     function clean_input($data) {
@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the submitted form data
     $stallNo = clean_input($_POST["newStallNo"]);
     $section = clean_input($_POST["newStallSection"]);
+	$size = clean_input($_POST['newStallSize']);
     $checkQuery = "SELECT * FROM available_stall WHERE stall_no = '$stallNo'";
     $checkResult = mysqli_query($conn, $checkQuery);
 
@@ -31,43 +32,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     // Handle the uploaded image
-    $targetDir = "images/";
-    $targetFile = $targetDir . basename($_FILES["newStallImage"]["name"]);
+	$targetDir = 'Stall_image/'; // Replace with your desired upload directory
+    $targetFile = $targetDir . basename($_FILES['newStallImage']['name']);
     $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-    $uploadOk = 1;
+    $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif');
 
-    // Check if the image file is a actual image or fake image
-    $check = getimagesize($_FILES["newStallImage"]["tmp_name"]);
-    if ($check !== false) {
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
-        $uploadOk = 0;
-    }
-
- 
-    // Allow certain file formats
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-        $uploadOk = 0;
-    }
-
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
-    } else {
-        // Try to move the uploaded file to the target directory
-        if (move_uploaded_file($_FILES["newStallImage"]["tmp_name"], $targetFile)) {
-            // File was uploaded successfully, now insert the stall data into the database
-            $insertQuery = "INSERT INTO available_stall (stall_no, section, image, status) VALUES ('$stallNo', '$section', '$targetFile', 'available')";
+    if (in_array($imageFileType, $allowedExtensions)) {
+        if (move_uploaded_file($_FILES['newStallImage']['tmp_name'], $targetFile)) {
+            $insertQuery = "INSERT INTO available_stall (stall_no, section, image, status, size) VALUES ('$stallNo', '$section', '$targetFile', 'available', '$size')";
             if (mysqli_query($conn, $insertQuery)) {
-                echo "New stall added successfully.";
+                echo "<script>alert('New stall added successfully.')</script>";
+				echo "<script>window.location.href = 'setting-stall.php'</script>";
             } else {
-                echo "Error: " . $insertQuery . "<br>" . mysqli_error($conn);
+                echo 'error';
             }
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            echo 'error';
         }
+    } else {
+        echo 'invalid';
     }
 
     // Close database connection

@@ -4,7 +4,8 @@ session_start();
 function getPaymentData()
 {
     global $conn;
-    $sql = "SELECT * FROM transactions";
+	$currentYear = date('Y');
+    $sql = "SELECT * FROM transactions WHERE years = '$currentYear'";
     $result = $conn->query($sql);
     $data = array();
     while ($row = $result->fetch_assoc()) {

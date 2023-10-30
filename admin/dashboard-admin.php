@@ -239,7 +239,7 @@ if (!isset($_SESSION['visited'])) {
 ?>
         <a href="setting-stall.php" class="card stall-owners">
             <i class="fas fa-store icon"></i>
-            <div class="category">Avaible Stall</div>
+            <div class="category">Available Stall</div>
             <div class="count"><?php echo $availableCount ?></div>
         </a>
         <?php
