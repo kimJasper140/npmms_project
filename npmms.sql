@@ -522,6 +522,7 @@ CREATE TABLE `violation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `transactions` (
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ;
 	`months` varchar(15) NOT NULL,
 	`salesCount` int(11) NOT NULL,
 	`paidCount` int(11) NOT NULL,
@@ -530,10 +531,10 @@ CREATE TABLE `transactions` (
 	`years` YEAR(4) NOT NULL
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 	
-INSERT INTO `transactions` (id, months, salesCount, paidCount, unpaidCount, stallLeased, years) VALUES (1,'January',0,0,0,0,2023), 
-(2,'February',0,0,0,0,2023), (3,'March',0,0,0,0,2023), (4,'April',0,0,0,0,2023), (5,'May',0,0,0,0,2023), 
-(6,'June',0,0,0,0,2023), (7,'July',0,0,0,0,2023), (8,'August',0,0,0,0,2023),(9,'September',0,0,0,0,2023),
-(10,'October',0,0,0,0,2023), (11,'November',0,0,0,0,2023),(12,'December',0,0,0,0,2023);
+INSERT INTO `transactions` (months, salesCount, paidCount, unpaidCount, stallLeased, years) VALUES ('January',0,0,0,0,2023),
+('February',0,0,0,0,2023), ('March',0,0,0,0,2023), ('April',0,0,0,0,2023), ('May',0,0,0,0,2023),
+('June',0,0,0,0,2023), ('July',0,0,0,0,2023), ('August',0,0,0,0,2023),('September',0,0,0,0,2023),
+('October',0,0,0,0,2023), ('November',0,0,0,0,2023),('December',0,0,0,0,2023);
 
 INSERT INTO `transactions` (months, salesCount, paidCount, unpaidCount, stallLeased, years) VALUES ('January',0,0,0,0,2024), 
 ('February',0,0,0,0,2024), ('March',0,0,0,0,2024), ('April',0,0,0,0,2024), ('May',0,0,0,0,2024), 

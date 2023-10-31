@@ -33,7 +33,7 @@
             <ul>
             <li><a href="profile.php"><i class="fas fa-store"></i>Profile</a></li>
             <li><a href="transactions.php"><i class="fas fa-shopping-cart"></i>Transaction</a></li>
-                <li><a href="Violation.php"><i class="fas fa-exclamation-triangle"></i>Stall Violation</a></li>
+                <li><a href="violation.php"><i class="fas fa-exclamation-triangle"></i>Stall Violation</a></li>
                 <li><a href="notification.php"><i class="fas fa-bell"></i>Notification</a></li>
                 <li><a href="maintainance.php"><i class="fas fa-chart-bar"></i>Maintenance Reports</a></li>
                 <li><a href="feedback.php"><i class="fas fa-comment"></i>Feedback</a></li>
