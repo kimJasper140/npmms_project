@@ -103,7 +103,8 @@ mysqli_close($conn);
             include "../config/config.php";
 
             // Retrieve and display the notifications from the database, grouped by date
-            $sql = 'SELECT DATE(created_at) AS date, COUNT(*) AS count FROM notifications GROUP BY DATE(created_at) ORDER BY created_at DESC';
+            $sql = 'SELECT DATE(created_at) AS date, COUNT(*) AS count FROM notifications GROUP BY DATE(created_at) ORDER BY DATE(created_at) DESC';
+
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {

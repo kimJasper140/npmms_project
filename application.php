@@ -227,7 +227,7 @@ include "header-home.php";
             $Contact = $_POST["Contact"]; $_SESSION['_contact'] = $Contact;
             $status = "pending"; $_SESSION['Stats'] = $status;
             header("Location: app_verification.php");
-            $my_sql = "SELECT * FROM applications WHERE name = '$name' OR email = '$email'";
+            $my_sql = "SELECT * FROM applications WHERE email = '$email'";
 
 
             // Validate form inputs

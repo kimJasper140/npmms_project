@@ -31,9 +31,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_violation'])) {
     $violation_date = $_POST['violation_date'];
     $remarks = $_POST['remarks'];
     $remediation = $_POST['remediation'];
+	
+	$getName = "SELECT name FROM stall_owner WHERE id = '$stall_owner_id'";
+	$res_name = $conn->query($getName);
+	$name_ = $res_name->fetch_assoc();
+	$name = $name_['name'];
+	
+	$getStallNum = "SELECT stall_no FROM stall_owner WHERE name = '$name'";
+	$res_stallNum = $conn->query($getStallNum);
+	$stallNum = $res_stallNum->fetch_assoc();
+	$sn = $stallNum['stall_no'];
 
     // Insert the new violation into the database
-    $sql_add_violation = "INSERT INTO violation (stall_owner_id, violation_type, description, violation_date, remarks, remediation) VALUES ('$stall_owner_id', '$violation_type', '$description', '$violation_date', '$remarks', '$remediation')";
+    $sql_add_violation = "INSERT INTO violation (stall_owner_id, violation_type, description, violation_date, remarks, remediation, stall_number) VALUES ('$stall_owner_id', '$violation_type', '$description', '$violation_date', '$remarks', '$remediation', '$sn')";
     $conn->query($sql_add_violation);
 
 

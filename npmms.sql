@@ -881,7 +881,12 @@ ALTER TABLE `applications`
 
 ALTER TABLE `srp`
     MODIFY `product_category` varchar(50) DEFAULT NULL;
+	
+ALTER TABLE `payment_details`
+	MODIFY  `remarks` varchar(255) DEFAULT NULL;
 
+ALTER TABLE `stall_notifications`
+	MODIFY `subject` varchar(255) NOT NULL;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

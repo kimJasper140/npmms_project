@@ -59,16 +59,20 @@ if (isset($_POST['register'])) {
     // Retrieve form data
     $name = $_POST['name'];
     $email = $_POST['email'];
-	$age = $_SESSION['_age'];
     $address = $_POST['address'];
     $username = $_POST['username'];
     $password = $_POST['password'];
     $roles = $_POST['roles'];
     $designation = $_POST['designation'];
-	$contact = $_SESSION['_contact'];
     $status = 'active';
     $dateCreated = date('Y-m-d H:i:s');
     $stallNo = $applicantRow['stall_no'];
+	
+	$age_contact_query = "SELECT contact, age FROM applications WHERE email='$email'";
+	$query_exe = $conn->query($age_contact_query);
+	$age_contact_array = $query_exe->fetch_assoc();
+	$age = $age_contact_array['age'];
+	$contact = $age_contact_array['contact'];
     // Insert the user data into the user table
     $insertQuery = "INSERT INTO `user` (`name`, `email`, `address`, `username`, `password`, `roles`, `designation`, `status`, `dateCreated`)
                     VALUES ('$name', '$email', '$address', '$username', '$password', '$roles', '$designation', '$status', '$dateCreated')";

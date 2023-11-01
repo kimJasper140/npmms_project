@@ -188,6 +188,7 @@ $(document).ready(function () {
             <a class="customA" href="profile.php">Profile</a></li>
             <a class="customA" href="transactions.php">Transaction</a></li>
                 <a class="customA" href="violation.php">Stall Violation</a></li>
+				<a class="customA" href="violation_graph.php">Violation Graph</a></li>
                 <a class="customA" href="notification.php" id="notification-link" onclick="clearNotificationBadge()">
     <i class=""></i>Notification
     <span class="badge" id="notification-badge"><?php echo ($unreadCount > 0) ? $unreadCount : ''; ?></span>
