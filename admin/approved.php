@@ -77,8 +77,8 @@ if (isset($_POST['register'])) {
     // Insert the user data into the user table
     $insertQuery = "INSERT INTO `user` (`name`, `email`, `address`, `username`, `password`, `roles`, `designation`, `status`, `dateCreated`)
                     VALUES ('$name', '$email', '$address', '$username', '$password', '$roles', '$designation', '$status', '$dateCreated')";
-	$insertQuery2 = "INSERT INTO `stall_owner` (`stall_no`, `name`, `age`, `address`, `email`, `contact`, `status`, `user_id`) VALUES (`$stallNo`,
-						`$age`, `$address`, `$email`, `$contact`, `operate`, $UID)";
+	$insertQuery2 = "INSERT INTO `stall_owner` (`stall_no`, `name`, `age`, `address`, `email`, `contact`, `status`, `user_id`) VALUES ('$stallNo', '$name',
+						'$age', '$address', '$email', '$contact', 'operate', '$UID')";
     mysqli_query($conn, $insertQuery);
 	mysqli_query($conn, $insertQuery2);
     
