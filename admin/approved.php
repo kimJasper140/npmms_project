@@ -23,8 +23,6 @@ if (isset($_POST['operate'])) {
     $applicantResult = mysqli_query($conn, $applicantQuery);
     $applicantRow = mysqli_fetch_assoc($applicantResult);
 
-
-    
     // Pre-fill the modal form with applicant data
     $name = $applicantRow['name'];
     $email = $applicantRow['email'];
@@ -61,18 +59,28 @@ if (isset($_POST['register'])) {
     // Retrieve form data
     $name = $_POST['name'];
     $email = $_POST['email'];
+	$age = $_SESSION['_age'];
     $address = $_POST['address'];
     $username = $_POST['username'];
     $password = $_POST['password'];
     $roles = $_POST['roles'];
     $designation = $_POST['designation'];
+	$contact = $_SESSION['_contact'];
     $status = 'active';
     $dateCreated = date('Y-m-d H:i:s');
     $stallNo = $applicantRow['stall_no'];
+	$getUID = "SELECT user_id FROM user WHERE username='$username'";
+	$result = $conn->query($getUID);
+	while($row = $result->fetch_assoc()){
+		$UID = $row['user_id'];
+	}
     // Insert the user data into the user table
     $insertQuery = "INSERT INTO `user` (`name`, `email`, `address`, `username`, `password`, `roles`, `designation`, `status`, `dateCreated`)
                     VALUES ('$name', '$email', '$address', '$username', '$password', '$roles', '$designation', '$status', '$dateCreated')";
+	$insertQuery2 = "INSERT INTO `stall_owner` (`stall_no`, `name`, `age`, `address`, `email`, `contact`, `status`, `user_id`) VALUES (`$stallNo`,
+						`$age`, `$address`, `$email`, `$contact`, `operate`, $UID)";
     mysqli_query($conn, $insertQuery);
+	mysqli_query($conn, $insertQuery2);
     
     // Update the status of the stall in the available_stall table to "unavailable"
     $updateStallQuery = "UPDATE available_stall SET status = 'unavailable' WHERE stall_no = '$stallNo'";

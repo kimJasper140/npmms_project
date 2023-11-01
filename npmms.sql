@@ -522,7 +522,7 @@ CREATE TABLE `violation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `transactions` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ;
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`months` varchar(15) NOT NULL,
 	`salesCount` int(11) NOT NULL,
 	`paidCount` int(11) NOT NULL,
