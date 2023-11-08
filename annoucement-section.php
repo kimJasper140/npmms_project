@@ -96,10 +96,11 @@ include "config/config.php";
         .button{
         width: 95%;
         height: 50px;
-        background-color: green;
+        background-color: #4CAF50;
         padding: 10px;
         margin: 10px;
         border: 1px solid black;
+        color: white;
     }
     .button:hover{
         background-color: #005000;
@@ -153,8 +154,8 @@ include "header-home.php";
             $image = $row['image'];
 
             // Display the announcement details
-            echo "<div class='button'>$title</div>";
-            echo "<div class='announcement'>";
+            echo "<div class='button' data-content='$title'>$title</div>";
+            echo "<div class='announcement' id='$title'>";
             echo "<h2>$title</h2>";
             echo "<p>$content</p>";
             echo "<p>Posted on: $postDate</p>";
@@ -168,5 +169,25 @@ include "header-home.php";
         }
         ?>
     </div>
+    <script>
+        const showButton = document.querySelectorAll(".button");
+
+        function show(event){
+            const _button = event.target;
+            const _elementId = _button.getAttribute("data-content");
+            const _targetElement = document.getElementById(_elementId);
+            if(_targetElement){
+                if(_targetElement.style.display === "none" || _targetElement.style.display === ""){
+                    _targetElement.style.display = "block";
+                } else {
+                    _targetElement.style.display = "none";
+                }
+            }
+        }
+
+        showButton.forEach(button => {
+            button.addEventListener("click", show);
+        });
+    </script>
 </body>
 </html>

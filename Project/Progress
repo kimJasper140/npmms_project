@@ -4,6 +4,7 @@ Major Changes:
     - password complex and secure security.. weak, strong
     - validation of email check existing(Confirmation Code)
 	- stall description with size
+    - announcement features with category or subset (yung naka highlight lang pag click saka mag aappear ang buong announcement)
 
 Minor Changes:
     - Fixed Logout
@@ -20,8 +21,7 @@ Ongoing
 
 
 Not Started
-1. announcement features with category or subset (yung naka highlight lang pag click saka mag aappear ang buong announcement)
-2. Redirect on notification click
+1. Redirect on notification click
 
 
 Other notes:
