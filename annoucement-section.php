@@ -22,6 +22,7 @@ include "config/config.php";
         }
 
         .announcement {
+            display: none;
             background-color: #FFF;
             padding: 20px;
             margin-bottom: 20px;
@@ -92,6 +93,18 @@ include "config/config.php";
             border-radius: 5px;
             cursor: pointer;
         }
+        .button{
+        width: 95%;
+        height: 50px;
+        background-color: green;
+        padding: 10px;
+        margin: 10px;
+        border: 1px solid black;
+    }
+    .button:hover{
+        background-color: #005000;
+    }
+
     /* Responsive Styles */
     @media (max-width: 768px) {
     body {
@@ -105,7 +118,6 @@ include "config/config.php";
     .announcement {
         padding: 10px;
     }
-   
 }
 
 
@@ -141,6 +153,7 @@ include "header-home.php";
             $image = $row['image'];
 
             // Display the announcement details
+            echo "<div class='button'>$title</div>";
             echo "<div class='announcement'>";
             echo "<h2>$title</h2>";
             echo "<p>$content</p>";

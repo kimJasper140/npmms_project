@@ -4,7 +4,7 @@ require_once ('jpgraph/src/jpgraph.php');
 require_once ('jpgraph/src/jpgraph_line.php');
 
 // Sample data
-$data = array(12, 15, 7, 2, 18, 9, 21, 10, 6, 21);
+//$data = array(12, 15, 7, 2, 18, 9, 21, 10, 6, 21);
 
 // Create a new graph
 $graph = new Graph(400, 300);
