@@ -14,7 +14,17 @@ if (!isset($_SESSION['username']) && $_SESSION['roles'] != 'admin') {
     header("location:../index.php");
     session_destroy();
 }
-
+function generateRandomPassword($length = 12) {
+    $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=';
+    $password = '';
+    
+    for ($i = 0; $i < $length; $i++) {
+        $randomIndex = random_int(0, strlen($charset) - 1);
+        $password .= $charset[$randomIndex];
+    }
+    
+    return $password;
+}
 if (isset($_POST['operate'])) {
     $appId = $_POST['appId'];
 
@@ -23,12 +33,17 @@ if (isset($_POST['operate'])) {
     $applicantResult = mysqli_query($conn, $applicantQuery);
     $applicantRow = mysqli_fetch_assoc($applicantResult);
 
+   
+    
+    // Example: Generate a random password with a default length of 12 characters
+    $randomPassword = generateRandomPassword();
+
     // Pre-fill the modal form with applicant data
     $name = $applicantRow['name'];
     $email = $applicantRow['email'];
     $address = $applicantRow['address'];
     $username = $applicantRow['name'];
-    $password = "";
+    $password =   $randomPassword;
     $roles = "stall_owner";
     $designation = "Stall Owner";
     
@@ -78,7 +93,6 @@ if (isset($_POST['register'])) {
                     VALUES ('$name', '$email', '$address', '$username', '$password', '$roles', '$designation', '$status', '$dateCreated')";
 	mysqli_query($conn, $insertQuery);
 	
-	// Insert the applicant data into the stall_owner table
 	$getUID = "SELECT user_id FROM user WHERE name = '$name'";
 	$result = $conn->query($getUID);
 	while($row = $result->fetch_assoc()){
@@ -87,6 +101,12 @@ if (isset($_POST['register'])) {
 						'$age', '$address', '$email', '$contact', 'operate', '$UID')";
 		mysqli_query($conn, $insertQuery2);
 	}
+    
+    // Update the status of the stall in the available_stall table to "unavailable"
+    $updateStallQuery = "UPDATE available_stall SET status = 'unavailable' WHERE stall_no = '$stallNo'";
+    mysqli_query($conn, $updateStallQuery);
+
+
     
     // Update the status of the stall in the available_stall table to "unavailable"
     $updateStallQuery = "UPDATE available_stall SET status = 'unavailable' WHERE stall_no = '$stallNo'";
@@ -172,24 +192,9 @@ if (isset($_POST['cancel'])) {
 }
 
 
-// Pagination variables
-$limit = 10; // Number of records per page
-$page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
-$start = ($page - 1) * $limit; // Starting index for records
-
-$search = isset($_POST['search']) ? $_POST['search'] : '';
-
-// Count total records
-$countQuery = "SELECT COUNT(*) AS total FROM applications WHERE status = 'approved' AND applicant_name LIKE '%$search%'";
-$countResult = mysqli_query($conn, $countQuery);
-$countRow = mysqli_fetch_assoc($countResult);
-$totalRecords = $countRow['total'];
-
-// Calculate total pages
-$totalPages = ceil($totalRecords / $limit);
 
 // Retrieve records for the current page
-$query = "SELECT * FROM applications WHERE status = 'approved' AND applicant_name LIKE '%$search%' LIMIT $start, $limit";
+$query = "SELECT * FROM applications WHERE status = 'approved'";
 $applicationsResult = mysqli_query($conn, $query);
 ?>
 
@@ -200,28 +205,15 @@ $applicationsResult = mysqli_query($conn, $query);
     <style>
          body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 50px;
         }
 
         h1 {
             text-align: center;
         }
 
-        table {
-            width: 95%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
 
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
+       
         input[type="text"],
         input[type="email"],
         input[type="password"] {
@@ -254,30 +246,7 @@ $applicationsResult = mysqli_query($conn, $query);
             margin-bottom: 0;
         }
 
-        .custom-css {
-            margin-left: 320px;
-            margin-top: 50px;
-        }
-
-        .pagination {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .pagination a {
-            display: inline-block;
-            padding: 8px 16px;
-            text-decoration: none;
-            border: 1px solid #ccc;
-            margin: 0 4px;
-            border-radius: 4px;
-        }
-
-        .pagination a.active {
-            background-color: #4CAF50;
-            color: white;
-            border: 1px solid #4CAF50;
-        }
+        
 
         /* Modal Styles */
         .custom-modals {
@@ -295,7 +264,7 @@ $applicationsResult = mysqli_query($conn, $query);
 
         .custom-modal-content {
             background-color: #fefefe;
-            margin: 10% auto; /* 10% from the top and centered */
+            margin: 5% auto; /* 10% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
             width: 35%; /* Could be more or less, depending on screen size */
@@ -318,18 +287,16 @@ $applicationsResult = mysqli_query($conn, $query);
 </head>
 <body>
     <?php 
-include "sidebar-admin.php";
+//include "sidebar-admin.php";
     ?>
     <div class="custom-css">
         <h1>Approved Applications</h1>
 
-        <form action="" method="POST">
-            <input type="text" name="search" placeholder="Search by name" value="<?php echo $search; ?>">
-            <button type="submit">Search</button>
-        </form>
+       
 
-        <?php if (mysqli_num_rows($applicationsResult) > 0) { ?>
-            <table>
+        
+        <table class="table table-bordered table-striped table-hover" >
+        <thead>
                 <tr>
                     <th>Name</th>
                     <th>Stall No</th>
@@ -340,8 +307,10 @@ include "sidebar-admin.php";
                     <th>Remarks</th>
                     <th style="width: 200px;text-align: center;">Action</th>
                 </tr>
-
+    </thead>
+                <?php if (mysqli_num_rows($applicationsResult) > 0) { ?>
                 <?php while ($row = mysqli_fetch_assoc($applicationsResult)) { ?>
+                    <tbody>
                     <tr>
                         <td><?php echo $row['applicant_name']; ?></td>
                         <td><?php echo $row['stall_no']; ?></td>
@@ -359,11 +328,10 @@ include "sidebar-admin.php";
                             </form>
                         </td>
                     </tr>
+                </tbody>
                 <?php } ?>
             </table>
-        <?php } else { ?>
-            <p style="text-align: center; color: red; margin-top: 20%;">No records found.</p>
-        <?php } ?>
+        <?php }  ?>
 
         <!-- Modal Form -->
         <div id="myModal" class="custom-modals">
@@ -383,7 +351,7 @@ include "sidebar-admin.php";
                     <input type="text" id="username" name="username" required><br><br>
                    <h1> Account information</h1><br>
                      <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" readonly><br><br>
+                    <input type="email" id="email" name="email" ><br><br>
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required><br><br>
                     <input type="hidden" id="appId" name="appId">
@@ -406,13 +374,7 @@ include "sidebar-admin.php";
             </div>
         </div>
 
-        <div class="pagination">
-            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                <a href="?page=<?php echo $i; ?>" <?php if ($page == $i) echo 'class="active"'; ?>><?php echo $i; ?></a>
-            <?php } ?>
-        </div>
-    </div>
-
+       
     <script>
         // Close the modal form when the close button is clicked
         document.getElementsByClassName("close")[0].addEventListener("click", function() {
@@ -437,6 +399,26 @@ include "sidebar-admin.php";
         function hideRemarkForm() {
             document.getElementById("remarkModal").style.display = "none";
         }
+    </script>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.js"></script>
+       <script type="text/javascript">
+        $(document).ready(function() {
+            $('table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf'
+                ],
+                searching: true,
+                ordering: false,
+                paging: true,
+
+            })
+
+        })
     </script>
 </body>
 </html>
