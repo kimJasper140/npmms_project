@@ -203,7 +203,7 @@ include "checking_user.php";
                                     <?php echo $row['designation']; ?>
                                 </td>
                                 <td>
-                                    <i class="fas fa-circle status-inactive"></i>
+                                    <i class="fas fa-circle status-inactive success"></i>
                                     <?php echo $row['status']; ?>
                                 </td>
                                 <td>

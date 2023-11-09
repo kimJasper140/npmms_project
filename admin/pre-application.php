@@ -101,156 +101,42 @@ if (isset($_POST['declineConfirm'])) {
     }
 }
 
-// Pagination variables
-$limit = 10; // Number of records per page
-$page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
-$start = ($page - 1) * $limit; // Starting index for records
-
-$search = isset($_POST['search']) ? $_POST['search'] : '';
-
-// Count total records
-$countQuery = "SELECT COUNT(*) AS total FROM applications WHERE status = 'pending' AND applicant_name LIKE '%$search%'";
-$countResult = mysqli_query($conn, $countQuery);
-$countRow = mysqli_fetch_assoc($countResult);
-$totalRecords = $countRow['total'];
-
-// Calculate total pages
-$totalPages = ceil($totalRecords / $limit);
 
 // Retrieve records for the current page
-$query = "SELECT * FROM applications WHERE status = 'pending' AND applicant_name LIKE '%$search%' LIMIT $start, $limit";
+$query = "SELECT * FROM applications WHERE status = 'pending'";
 $applicationsResult = mysqli_query($conn, $query);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Pending Applications</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        h1 {
-            text-align: center;
-        }
+    <!-- Other-->
+    
 
-        table {
-            width: 95%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.css" rel="stylesheet" />
 
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        input[type="text"] {
-            padding: 6px 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            padding: 6px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button[name="approve"] {
-            background-color: #5cb85c;
-            color: #fff;
-        }
-
-        button[name="decline"] {
-            background-color: #d9534f;
-            color: #fff;
-        }
-
-        form {
-            display: inline-block;
-            margin-bottom: 0;
-        }
-
-        .custom-css {
-            margin-left: 320px;
-            margin-top: 50px;
-        }
-
-        .pagination {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .pagination a {
-            display: inline-block;
-            padding: 8px 16px;
-            text-decoration: none;
-            border: 1px solid #ccc;
-            margin: 0 4px;
-            border-radius: 4px;
-        }
-
-        .pagination a.active {
-            background-color: #4CAF50;
-            color: white;
-            border: 1px solid #4CAF50;
-        }
-
-        /* Modal Styles */
-        .modal-dialog {
-            max-width: 500px;
-        }
-
-        .modal-content {
-            border-radius: 0;
-        }
-
-        .modal-header {
-            background-color: #5cb85c;
-            color: #fff;
-        }
-
-        .modal-title {
-            font-weight: bold;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .modal-footer {
-            text-align: center;
-        }
-
-        .modal-footer button {
-            margin-right: 10px;
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.js"></script>
+    
+    <title>Pre-Application</title>
 </head>
-<?php 
-include "sidebar-admin.php";
-?>
+
 <body>
-    <div class="custom-css">
-        <h1>Pending Pre-applications</h1>
-
-        <form action="" method="POST">
-            <input type="text" name="search" placeholder="Search by name" value="<?php echo $search; ?>">
-            <button type="submit">Search</button>
-        </form>
-
-        <?php if (mysqli_num_rows($applicationsResult) > 0) { ?>
-            <table>
-                <tr>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg bg-light rounded my-2 py-2">
+                <h2 class="text-center text-success pt-2"><b>Pre-Application</b></h2>
+                <hr>
+                
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
                     <th>Name</th>
                     <th>Stall No</th>
                     <th>Age</th>
@@ -258,9 +144,14 @@ include "sidebar-admin.php";
                     <th>Email</th>
                     <th>Contact</th>
                     <th>Status</th>
-                    <th style="width: 200px;text-align: center;">Action</th>
+                    <th style="width: 220px;text-align: center;">Action</th>
                 </tr>
+                    </thead>
 
+                    <tbody>
+                     <?php if (mysqli_num_rows($applicationsResult) > 0) { ?>
+                        
+                        
                 <?php while ($row = mysqli_fetch_assoc($applicationsResult)) { ?>
                     <tr>
                         <td><?php echo $row['applicant_name']; ?></td>
@@ -273,32 +164,23 @@ include "sidebar-admin.php";
                         <td>
                             <form action="" method="POST">
                                 <input type="hidden" name="appId" value="<?php echo $row['id']; ?>">
-                                <button type="button" onclick="showModal('approveModal', <?php echo $row['id']; ?>)">Approve</button>
-                                <button type="button" onclick="showModal('declineModal', <?php echo $row['id']; ?>)">Decline</button>
-                                <button type="submit" formaction="application-form.php?id=<?php echo $row['id']; ?>" formtarget="_blank">View</button>
+                                <button type="button" class="btn btn-success" onclick="showModal('approveModal', <?php echo $row['id']; ?>)">Approve</button>
+                                <button type="button" class="btn btn-danger" onclick="showModal('declineModal', <?php echo $row['id']; ?>)">Decline</button>
+                                <button type="submit" class="btn btn-primary" formaction="application-form.php?id=<?php echo $row['id']; ?>" formtarget="_blank">View</button>
                             </form>
                         </td>
                     </tr>
                 <?php } ?>
             </table>
-        <?php } else { ?>
-            <p style="text-align: center; color: red; margin-top: 20%;">No records found.</p>
-        <?php } ?>
-
-        <div class="pagination">
-            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                <a href="?page=<?php echo $i; ?>" <?php if ($page == $i) echo 'class="active"'; ?>><?php echo $i; ?></a>
-            <?php } ?>
-        </div>
-    </div>
-
-    <!-- Approve Modal -->
-    <div id="approveModal" class="modal fade">
+        <?php
+     }?>
+                    </tbody>
+                    <div id="approveModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Approve Application</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="" method="POST">
@@ -309,7 +191,7 @@ include "sidebar-admin.php";
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-success" name="approveConfirm">Confirm</button>
                 </div>
                 </form>
@@ -323,7 +205,7 @@ include "sidebar-admin.php";
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Decline Application</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="" method="POST">
@@ -334,17 +216,37 @@ include "sidebar-admin.php";
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-danger" name="declineConfirm">Confirm</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
+                </table>
+            </div>
+        </div>
+    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf'
+                ],
+                searching: true,
+                ordering: false,
+                paging: true,
+                length:true,
+
+            })
+
+        })
+    </script>
+    
+
+  
     <script>
         // Function to show modal
         function showModal(modalId, appId) {
@@ -353,12 +255,8 @@ include "sidebar-admin.php";
             $(modal).modal('show');
             appIdInput.value = appId;
         }
-
-        // Function to close modal
-        function closeModal(modalId) {
-            var modal = document.getElementById(modalId);
-            $(modal).modal('hide');
-        }
     </script>
 </body>
+
 </html>
+

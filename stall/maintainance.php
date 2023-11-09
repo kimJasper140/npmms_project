@@ -6,11 +6,13 @@ include "../config/config.php";
 $loggedInUserId = $_SESSION['id'];
 
 // Retrieve the stall owner's ID based on the logged-in user's ID
-$sqlStallOwner = "SELECT id FROM `stall_owner` WHERE user_id = '$loggedInUserId'";
+$sqlStallOwner = "SELECT * FROM `stall_owner` WHERE user_id = '$loggedInUserId'";
 $resultStallOwner = $conn->query($sqlStallOwner);
 
 $rowStallOwner = $resultStallOwner->fetch_assoc();
 $stallOwnerId = $rowStallOwner['id'];
+$stallname = $rowStallOwner['name'];
+$stallNo = $rowStallOwner['stall_no'];
 
 if (isset($_POST["submit"])) {
     // Clean and validate the input data
@@ -22,6 +24,9 @@ if (isset($_POST["submit"])) {
     // Insert the maintenance record into the database
     $sql = "INSERT INTO maintenance (maintenance_type, date, description, status, owner_id) VALUES ('$maintenanceType', '$date', '$description', '$status', '$stallOwnerId')";
     if (mysqli_query($conn, $sql)) {
+        $notificationMessage = "New Maintainance report From " . $stallname . " of stall number ".$stallNo  ;
+                $insertQuery = "INSERT INTO notifications (message, read_status) VALUES ('$notificationMessage', 0)";
+                mysqli_query($conn, $insertQuery);
         echo "<script>alert('Maintenance record added successfully');</script>";
     } else {
         echo "<script>alert('Error adding maintenance record: " . mysqli_error($conn) . "');</script>";
