@@ -34,24 +34,44 @@ if (isset($_GET['id'])) {
 } else {
     include "topbar.php";
     ?>
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Admin Maintenance Report List</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    </head>
-    <body>
-    <div class="container" style="margin-top:5%;">
-        <h1>Admin Maintenance Report List</h1>
-        <table class="table table-bordered" style="max-width:95%;">
-            <tr>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Other-->
+   <!-- Add your Bootstrap JavaScript and jQuery scripts here -->
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <title>Maintainance Reports</title>
+</head>
+
+<body>
+    <div class="container" style="margin-top:50px;">
+        <div class="row justify-content-center">
+            <div class="col-lg bg-light rounded my-2 py-2">
+                <h2 class="text-center text-success pt-2"><b>Maintainance List</b></h2>
+               
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr class="text-center">
+                        <tr>
                 <th>Report ID</th>
                 <th>Maintenance Type</th>
                 <th>Description</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
-            <?php
+                        </tr>
+                        <tbody>
+                        
+                  
+                        <?php
             // Fetch all maintenance reports from the database
             $sql = "SELECT * FROM maintenance ORDER BY date DESC";
             $result = mysqli_query($conn, $sql);
@@ -72,9 +92,7 @@ if (isset($_GET['id'])) {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editModalLabel">Edit Maintenance Report</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        
                     </div>
                     <div class="modal-body">
                         <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $row['id']; ?>" method="POST">
@@ -108,19 +126,38 @@ if (isset($_GET['id'])) {
         </div>
         <?php
     }
-} else {
-    echo "<tr><td colspan='5'>No maintenance reports found.</td></tr>";
-}
-?>
+} 
+?>  </tbody>
         </table>
     </div>
 
-    <!-- Add your Bootstrap JavaScript and jQuery scripts here -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.js"></script>
     </body>
     </html>
     <?php
 }
 ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf'
+                ],
+                searching: true,
+                ordering: false,
+                paging: true,
+
+            })
+
+        })
+    </script>
+</body>
+
+</html>
