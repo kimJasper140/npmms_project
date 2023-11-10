@@ -20,6 +20,10 @@ Ongoing
 4. Contract expiration
 5. Redirect on notification click
 
+additional Note.
+1. Announcement can archive(instead of delete)
+2. fixing stall_owner.php report (table inside text is overlapping with other text)
+
 Other notes:
 1. Minor changes in Database Dump File
 2. Minor bug and error fixes
@@ -34,10 +38,17 @@ For Frontend:
 3. dashboard for stall owner
 4. yung sa mga active change color of icon and other icon
 5. ayusin daw ang dashboard arrangment and color
-6. pagelation and search function
+->6. pagelation and search function(on going)<-
+7. feedback page in admin/feedback.php improve format
+8. all modals and forms should be in a standard format and size
+9.sidebar(can be hide and show) and  header
+
 
 Halted:
 1. Other way to notify user for approval of pre-application(SMS or Messenger)
+
+kimjasper notes()
+1. ////6. pagelation and search function(on going)
 
 
 

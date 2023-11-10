@@ -2,8 +2,14 @@
 include "checking_user.php";
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
     <title>staff User List</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -14,7 +20,7 @@ include "checking_user.php";
         }
 
         .no-image {
-            color: #888;
+            color: red;
             font-style: italic;
         }
     </style>
@@ -23,12 +29,17 @@ include "checking_user.php";
     <?php
 include "topbar.php";
     ?>
-    <div class="container mt-5" >
-        <h1 class="text-center" style="margin-top:7%;">Staff User List</h1>
-        <table class="table table-bordered mt-3">
-            <thead class="thead-light">
-                <tr>
-            <th>User ID</th>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg bg-light rounded my-2 py-2">
+                <h2 class="text-center text-success pt-2"><b>Staff List User</b></h2>
+                <hr>
+              
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr class="text-center">
+                          
+                            <th>User ID</th>
             <th>Profile</th>
             <th>Name</th>
             <th>Email</th>
@@ -38,9 +49,12 @@ include "topbar.php";
             <th>Roles</th>
             <th>Designation</th>
             <th>Status</th>
-           
-        </tr>
-        <?php
+                            </th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    <?php
          Include "../config/config.php";// to connect to the database
 
         // Fetch staff user data from the database with 'roles' set to 'staff'
@@ -67,18 +81,34 @@ include "topbar.php";
                
                 echo "</tr>";
             }
-        } else {
-            echo "<tr><td colspan='11'>No staff users found.</td></tr>";
-        }
+        }?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+      <!-- Other-->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.css" rel="stylesheet" />
 
-        // Close the database connection
-        mysqli_close($conn);
-        ?>
-    </table>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.js"></script>
     
-    <!-- Add Bootstrap JS and jQuery (required for Bootstrap) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.9/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf'
+                ],
+                searching: true,
+                ordering: false,
+                paging: true,
+
+            })
+
+        })
+    </script>
 </body>
+
 </html>
