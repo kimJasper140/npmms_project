@@ -50,7 +50,7 @@
             );
             // Execute the statement
             if ($stmt->execute() === TRUE) {
-                // Display success message
+                // Display success messages
                 echo '<script>alert("Pre-application Submitted Naujan Public Market Will Call You for further Requirements!");</script>';
                 // Insert notification details
                 $notificationMessage = "New Pre-application submitted by. " . $applicantName;
