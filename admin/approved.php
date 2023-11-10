@@ -15,7 +15,7 @@ if (!isset($_SESSION['username']) && $_SESSION['roles'] != 'admin') {
     session_destroy();
 }
 function generateRandomPassword($length = 12) {
-    $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=';
+    $charset = 'abcdefghijklmnopqrstuvwxyz0123456789';
     $password = '';
     
     for ($i = 0; $i < $length; $i++) {
