@@ -179,6 +179,10 @@
 
         $result = $conn->query($sql);
 
+        echo "<center>";
+        echo "<h1 style='margin-top: 70px;'>Violation Graph</h1>";
+        echo "<img src='generate_graph.php' alt='Generated Graph'>";
+        echo "</center>";
         if ($result !== false && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='announcement'>";
