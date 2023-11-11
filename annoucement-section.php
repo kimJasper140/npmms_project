@@ -136,7 +136,7 @@ include "header-home.php";
  
         <?php
         // Retrieve announcement details from the database in descending order
-        $query = "SELECT * FROM announcements  ORDER BY id DESC";
+        $query = "SELECT * FROM announcements where status='posted' ORDER BY id DESC";
         $result = $conn->query($query);
 
         // Loop through each announcement
