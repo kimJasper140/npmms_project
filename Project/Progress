@@ -21,8 +21,16 @@ Ongoing
 5. Redirect on notification click
 
 additional Note.
-1. Announcement can archive(instead of delete)
+1. Announcement can archive(instead of delete)//on going //
 2. fixing stall_owner.php report (table inside text is overlapping with other text)
+3. Gcash Qr code should have change picture on the admin side that will display on the stall owner/user side
+4. Error on Appplication page (when in an invalid format)
+5. Note : one admin cannot deactivated so (so may matitirang isang account na di pede 
+inactive let say for instance pano kapag yung may nag access ng admin account and he deactivated
+ all account so d na sia accessible so to prevent that thing to happen it should be one admin cannot 
+ be deactivated)
+
+
 
 Other notes:
 1. Minor changes in Database Dump File
@@ -38,17 +46,14 @@ For Frontend:
 3. dashboard for stall owner
 4. yung sa mga active change color of icon and other icon
 5. ayusin daw ang dashboard arrangment and color
-->6. pagelation and search function(on going)<-
+6. pagelation and search function(on going)<- //ongoing //
 7. feedback page in admin/feedback.php improve format
 8. all modals and forms should be in a standard format and size
-9.sidebar(can be hide and show) and  header
+9. sidebar(can be hide and show) and  header
 
 
 Halted:
 1. Other way to notify user for approval of pre-application(SMS or Messenger)
-
-kimjasper notes()
-1. ////6. pagelation and search function(on going)
 
 
 

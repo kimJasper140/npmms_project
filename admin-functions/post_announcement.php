@@ -24,7 +24,7 @@ if ($fileError === UPLOAD_ERR_OK) {
         include "../config/config.php";
 
         // Prepare the SQL statement
-        $sql = "INSERT INTO announcements (title, content, post_date, image) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO announcements (title, content, post_date, image,status) VALUES (?, ?, ?, ?,'posted')";
         $stmt = $conn->prepare($sql);
 
         // Bind the parameters and execute the statement

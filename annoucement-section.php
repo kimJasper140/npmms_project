@@ -132,18 +132,11 @@ include "header-home.php";
  
  
         <h1 style="margin-top:10%;">Announcements</h1>
-        <label for="category">Preview Filter: </label>
-        <select input type = "text" name = "announcement" id = "category" style="border-bottom: 1px solid #000;" required>
-            <option value="default">Select a Category</option>
-            <option value="category1">Category 1</option>
-            <option value="category2">Category 2</option>
-            <option value="category3">Category 3</option>
-            <option value="category4">Category 4</option>
-        </select>
+       
  
         <?php
         // Retrieve announcement details from the database in descending order
-        $query = "SELECT * FROM announcements ORDER BY id DESC";
+        $query = "SELECT * FROM announcements  ORDER BY id DESC";
         $result = $conn->query($query);
 
         // Loop through each announcement
