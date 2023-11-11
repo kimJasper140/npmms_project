@@ -53,7 +53,7 @@ $dataJSON = json_encode($data);
                 borderColor: 'red',
                 backgroundColor: 'transparent',
                 tension: 0.4,
-                fill: false
+                fill: true
             }]
         };
 

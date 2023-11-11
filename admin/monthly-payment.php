@@ -157,6 +157,7 @@ include "../tempplate/loading_screen.php";
         <h2 class="mt-4">Online Payment</h2>
         <button type="button" class="btn btn-success" onclick="showPage('monthly-payment.php')">Payment History</button>
         <button type="button" class="btn btn-success" onclick="showPage('payment_reports.php')">Payment Reports</button>
+        <button type="button" class="btn btn-success" onclick="showPage('payment-setting.php')">Change Recipient</button>
         <h3 class="mt-4">Payment Details</h3>
 
         <div class="table-responsive">
