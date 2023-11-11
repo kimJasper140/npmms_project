@@ -75,14 +75,18 @@ include "../tempplate/loading_screen.php";
     </style>
     </head>
     <body>
-
         <div class="container" style="margin-top:5%;">
             <h2 class="mt-4">Records of Transaction</h2>
             <button type="button" class="btn btn-success" onclick="showPage('monthly-payment.php')" >Payment History</button>
             <button type="button" class="btn btn-success" onclick="showPage('payment_reports.php')">Payment Reports</button>
+            <button type="button" class="btn btn-success" onclick="showPage('payment-setting.php')">Change Recipient</button>
+
             <h3 class="mt-4">Transaction Log</h3>
 			<select input type = "text" name = "announcement" id = "category" class = "category_dropdown" required>
 				<option value="default">Filter by</option>
+                <option value="default">Year</option>
+                <option value="default">Month</option>
+                <option value="default">Weeks</option>
 			</select>
 
             <div class="table-responsive">
@@ -113,6 +117,7 @@ include "../tempplate/loading_screen.php";
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <button type="button" class="btn btn-success" onclick="showPage('report-overview.php')">Edit Records</button>
             </div>
         </div>
 

@@ -1,10 +1,10 @@
 <?php
-$mysqli = new mysqli('localhost', 'root', 'legendaryCodeGodz24', 'NPMMS');
+$mysqli = new mysqli('localhost', 'root', '', 'NPMMS');
 ?>
 <?php
 $servername = 'localhost';
 $username = 'root';
-$password = 'legendaryCodeGodz24';
+$password = '';
 $dbname = 'NPMMS';
 
 // Create connection

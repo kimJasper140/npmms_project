@@ -148,7 +148,7 @@ include "checking_user.php";
     }
     ?>
 
-        <div class="container mt-5"">
+        <div class="container mt-5">
             <h2 style="margin-left:10%;">User Management</h2>
             <div class="text-right mb-3">
                 <div class="text-right mb-3">
