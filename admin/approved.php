@@ -15,7 +15,7 @@ if (!isset($_SESSION['username']) && $_SESSION['roles'] != 'admin') {
     session_destroy();
 }
 function generateRandomPassword($length = 12) {
-    $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=';
+    $charset = 'abcdefghijklmnopqrstuvwxyz0123456789';
     $password = '';
     
     for ($i = 0; $i < $length; $i++) {
@@ -351,9 +351,9 @@ $applicationsResult = mysqli_query($conn, $query);
                     <input type="text" id="username" name="username" required><br><br>
                    <h1> Account information</h1><br>
                      <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" ><br><br>
+                    <input type="email" id="email" name="email" readonly><br><br>
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required><br><br>
+                    <input type="password" id="password" name="password" readonly><br><br>
                     <input type="hidden" id="appId" name="appId">
                     <button type="submit" name="register">Register</button>
                 </form>

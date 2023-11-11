@@ -9,8 +9,9 @@ include "checking_user.php";
     <title>Announcements | admin</title>
     <link rel="stylesheet" type="text/css" href="../tempplate/side-bar.css">
     <link rel="icon" href="../image/logo.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <style>
         body {
@@ -175,7 +176,7 @@ include "checking_user.php";
         }
 
         function deleteAnnouncement(id) {
-            var confirmed = confirm('Are you sure you want to delete this announcement?');
+            var confirmed = confirm('Are you sure you want to Hide this announcement?');
             if (confirmed) {
                 window.location.href = '../admin-functions/delete_announcement.php?id=' + id;
             } else {
@@ -237,10 +238,15 @@ include "checking_user.php";
 <body>
     <?php include "sidebar-admin.php"; ?>
     <div class="content">
+    
         <h1 style="margin-top:5%;">Announcements</h1>
-
+        
+        <button class="btn btn-secondary" style="float:rigth;margin-left:90%;" onclick="window.location.href='../admin/archived-announcement.php'">Go to Archived</button>
+       
+        <hr>
         <div class="form-container">
             <h2>Create New Announcement</h2>
+           
             <form method="post" action="../admin-functions/post_announcement.php" enctype="multipart/form-data">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" required>
@@ -256,7 +262,8 @@ include "checking_user.php";
         </div>
 
         <?php
-        $query = "SELECT * FROM announcements ORDER BY id DESC";
+        $query = "SELECT * FROM announcements WHERE status = 'posted' ORDER BY id DESC";
+
         $result = $conn->query($query);
 
         while ($row = $result->fetch_assoc()) {
@@ -273,7 +280,7 @@ include "checking_user.php";
                         <i class="fas fa-edit"></i>Edit
                     </button>
                     <button onclick="deleteAnnouncement(<?php echo $id; ?>)">
-                        <i class="fas fa-trash-alt"></i>Delete
+                        <i class="fas fa-trash-alt"></i>Archive
                     </button>
                 </div>
                 <p id="content_<?php echo $id; ?>"><?php echo $content; ?></p>

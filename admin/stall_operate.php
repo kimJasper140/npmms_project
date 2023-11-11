@@ -3,126 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stall Owner Management | Admin</title>
-    <!-- Add your CSS and JavaScript includes here -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f2f2f2;
-        }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    <!-- Other-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.css" rel="stylesheet" />
 
-        form {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            margin-right: 10px;
-        }
-
-        button {
-            padding: 10px 15px;
-            background-color: #299be4;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        table {
-            width:95%;
-            border-collapse: collapse;
-            border: 1px solid #ccc;
-            margin-left: 2%;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ccc;
-        }
-
-        th {
-            background-color: green;
-            color: #fff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        td a {
-            text-decoration: none;
-            color: #299be4;
-        }
-
-        td a:hover {
-            text-decoration: underline;
-        }
-
-        .category_dropdown{
-            margin-left:2%;
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.js"></script>
+    
+    <title>Stall Owner Management</title>
 </head>
+<?php 
+  // Include necessary files and configurations
+  include "../config/config.php";
+  include "checking_user.php";
 
+  $sql = "SELECT id, stall_no, name, age, address, email, contact, status, user_id FROM stall_owner WHERE status = 'operate'";
+  $result = $conn->query($sql);
+
+?>
 <body>
-
-    <?php
-    // Include necessary files and configurations
-    include "../config/config.php";
-    include "checking_user.php";
-
-    // Handle form submissions if any
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Handle form submission for search
-        $search = $_POST['search'];
-        $sql = "SELECT id, stall_no, name, age, address, email, contact, status, user_id FROM stall_owner WHERE status = 'operate' AND 
-                (id LIKE '%$search%' OR stall_no LIKE '%$search%' OR name LIKE '%$search%' OR age LIKE '%$search%' OR address LIKE '%$search%' OR 
-                email LIKE '%$search%' OR contact LIKE '%$search%')";
-        $result = $conn->query($sql);
-    } else {
-        // Display all active stall owners on initial load
-        $sql = "SELECT id, stall_no, name, age, address, email, contact, status, user_id FROM stall_owner WHERE status = 'operate'";
-        $result = $conn->query($sql);
-    }
-
-
-   
-    ?>
 <?php 
 include "topbar.php";
 ?>
-    <h3 style="margin-top:5%;">Stall Owner Management</h3>
-
-    <!-- Search Form -->
-    <form method="post">
-        <input type="text" name="search" placeholder="Search stall owners...">
-        <button type="submit">Search</button>
-    </form>
-    <select input type = "text" name = "announcement" id = "category" class = "category_dropdown" required>
-        <option value="default">Filter by</option>
-        <option value="id">ID</option>
-        <option value="stall_number">Stall Number</option>
-        <option value="name">Name</option>
-        <option value="address">Address</option>
-        <option value="email">Email</option>
-        <option value="contact">Contact</option>
-        <option value="status">Status</option>
-        <option value="user_id">User ID</option>
-        <option value="action">Action</option>
-    </select>
-    <!-- Display Table -->
-    <table>
-    <tr>
+    <div class="container" style="margin-top:50px;">
+        <div class="row justify-content-center">
+            <div class="col-lg bg-light rounded my-2 py-2">
+                <h2 class="text-center text-success pt-2"><b>Stall Owner Management</b></h2>
+                <hr>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
         <th>ID</th>
         <th>Stall Number</th>
         <th>Name</th>
@@ -134,7 +47,10 @@ include "topbar.php";
         <th>User ID</th>
         <th>Action</th>
     </tr>
-    <?php
+                    </thead>
+
+                    <tbody>
+                    <?php
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
@@ -148,24 +64,39 @@ include "topbar.php";
             echo "<td>" . $row['status'] . "</td>";
             echo "<td>" . $row['user_id'] . "</td>";
             echo "<td>";
-            echo "<a href='edit_stall_owner.php?id=" . $row['id'] . "'>Edit</a> | ";
-            echo "<a href='terminate_stall_owner.php?id=" . $row['id'] . "'>Terminate</a> | ";
-            echo " <a href='view_violations.php?stall_owner_id=". $row['id']."'>Violations</a> |"; // Add this line for View 
-            echo "<a href='view_contract.php?stall_owner_id=" . $row['id'] . "'>Contract</a>   |"; // Add this line for View 
-            echo "<a href='close_stall.php?id=" . $row['id'] . "'>Close</a>   "; // Add this line for View 
+            echo "<a class='btn btn-primary' href='edit_stall_owner.php?id=" . $row['id'] . "'>Edit</a>  ";
+            echo "<a class='btn btn-warning' href='terminate_stall_owner.php?id=" . $row['id'] . "'>Terminate</a>  ";
+            echo "<a class='btn btn-danger' href='view_violations.php?stall_owner_id=". $row['id']."'>Violations</a> "; // Add this line for View 
+            echo "<a class='btn btn-success' href='view_contract.php?stall_owner_id=" . $row['id'] . "'>Contract</a>   "; // Add this line for View 
+            echo "<a class='btn btn-info' href='close_stall.php?id=" . $row['id'] . "'>Close</a>   "; // Add this line for View 
             
             
             echo "</td>";
             echo "</tr>";
         }
-    } else {
-        echo "<tr><td colspan='10'>No stall owners found</td></tr>";
-    }
-    ?>
-</table>
+    } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf'
+                ],
+                searching: true,
+                ordering: true,
+                paging: true,
+               
+
+            })
+
+        })
+    </script>
 </body>
 
 </html>
-<?php 
-// include "contract_remider.php";
-?>

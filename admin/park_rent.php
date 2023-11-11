@@ -7,31 +7,7 @@ session_start();
     <title>Parking Rent List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        table {
-            max-width: 95%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
+      
         .modal {
         display: none;
         position: fixed;
@@ -94,58 +70,19 @@ session_start();
         cursor: pointer;
     }
 
-        .search-form {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .search-input {
-            padding: 5px;
-            width: 300px;
-        }
-
-        .search-button {
-            padding: 5px 15px;
-        }
-
-        .add-button {
-            margin-top: 20px;
-            text-align: right;
-        }
-
-        .add-button button {
-            padding: 5px 10px;
-        }
     </style>
 </head>
-<?php 
-include "topbar.php";
-?>
 <body>
-<div class="container" style="margin-top:5%;">
-        <h1 class="text-left mt-3">Daily Parking Rent List</h1>
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-6">
-                <form method="post" action="" class="form-inline justify-content-center">
-                    <div class="form-group">
-                        <input type="text" name="search_keyword" class="form-control mr-2" placeholder="Search by name or plate no">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-3">
-            <div class="col-md-12">
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-success mr-2" onclick="display_add_modal()">Add Entry</button>
-                    <button class="btn btn-secondary mr-2" onclick="generateDailyReport()">Generate Daily Report (PDF)</button>
-                    <button class="btn btn-danger" onclick="resetTable()">Reset Table</button>
-                </div>
+<h2 class="text-center text-success pt-2"><b>Daily Park Rent</b></h2>
+                <hr>
+                <button class="btn btn-success mr-2" onclick="display_add_modal()">Add Entry</button>
+                <button class="btn btn-secondary mr-2" onclick="generateDailyReport()">Generate Daily Report (PDF)</button>
+                <button class="btn btn-danger" onclick="resetTable()">Reset Table</button>
+                <hr>
 
 <div class="row mt-3">
             <div class="col-md-12">
-                    <table class="table table-bordered table-hover" style="margin:3%">
+                    <table class="table table-bordered table-hover" style="width:80%;margin:10%;">
                         <thead>
         <tr>
             <th>Name</th>
@@ -156,35 +93,35 @@ include "topbar.php";
             <th>Remarks</th>
             <th>Action</th>
         </tr>
+        <tbody>
         <?php
         include "../config/config.php";
-         if (isset($_POST["search_keyword"])) {
-            $searchKeyword = clean_input($_POST["search_keyword"]);
-    
-            // Fetch parking rent entries based on the search keyword
-            $sql3 = "SELECT * FROM park_rent WHERE 
-                    name LIKE '%$searchKeyword%' OR 
-                    plate_no LIKE '%$searchKeyword%'";
-    
-            $resultsearch = mysqli_query($conn, $sql3);
-    
-            if (mysqli_num_rows( $resultsearch) > 0) {
-                while ($row = mysqli_fetch_assoc($resultsearch)) {
-                    echo "<tr>";
-                    echo "<td>" . $row['name'] . "</td>";
-                    echo "<td>" . $row['plate_no'] . "</td>";
-                    echo "<td>" . $row['time_in'] . "</td>";
-                    echo "<td>" . $row['time_out'] . "</td>";
-                    echo "<td>" . $row['amount'] . "</td>";
-                    echo "<td>" . $row['remarks'] . "</td>";
-                    echo '<td><button class="button"; onclick="display_edit_modal(' . $row['id'] . ',\'' . $row['name'] . '\',\'' . $row['plate_no'] . '\',\'' . $row['time_in'] . '\',\'' . $row['time_out'] . '\',\'' . $row['amount'] . '\',\'' . $row['remarks'] . '\')">Edit</button></td>';
-                    echo "</tr>";
-                    
-                }
-            } else {
-                echo "<tr><td colspan='7'>No entries found.</td></tr>";
+     
+
+        // Fetch all parking rent entries
+        $sql = "SELECT * FROM park_rent ORDER BY time_in DESC";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>";
+                echo "<td>" . $row['name'] . "</td>";
+                echo "<td>" . $row['plate_no'] . "</td>";
+                echo "<td>" . $row['time_in'] . "</td>";
+                echo "<td>" . $row['time_out'] . "</td>";
+                echo "<td>" . $row['amount'] . "</td>";
+                echo "<td>" . $row['remarks'] . "</td>";
+                echo '<td><button class="btn btn-primary" onclick="display_edit_modal(' . $row['id'] . ',\'' . $row['name'] . '\',\'' . $row['plate_no'] . '\',\'' . $row['time_in'] . '\',\'' . $row['time_out'] . '\',\'' . $row['amount'] . '\',\'' . $row['remarks'] . '\')">Edit</button></td>';
+                echo "</tr>";
             }
-        }
+        } 
+
+        // Close the database connection
+
+        ?>
+    </thead>
+    </table>
+    <?php
         // Function to escape user inputs
         function clean_input($input)
         {
@@ -258,32 +195,9 @@ include "topbar.php";
                     }
                 }
             
-        
-
-        // Fetch all parking rent entries
-        $sql = "SELECT * FROM park_rent ORDER BY time_in DESC";
-        $result = mysqli_query($conn, $sql);
-
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>";
-                echo "<td>" . $row['name'] . "</td>";
-                echo "<td>" . $row['plate_no'] . "</td>";
-                echo "<td>" . $row['time_in'] . "</td>";
-                echo "<td>" . $row['time_out'] . "</td>";
-                echo "<td>" . $row['amount'] . "</td>";
-                echo "<td>" . $row['remarks'] . "</td>";
-                echo '<td><button onclick="display_edit_modal(' . $row['id'] . ',\'' . $row['name'] . '\',\'' . $row['plate_no'] . '\',\'' . $row['time_in'] . '\',\'' . $row['time_out'] . '\',\'' . $row['amount'] . '\',\'' . $row['remarks'] . '\')">Edit</button></td>';
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr> <td colspan='7' >No entries found.</td></tr>";
-        }
-
-        // Close the database connection
-        mysqli_close($conn);
         ?>
-    </table>
+
+        
 
     <!-- Modal for adding entry -->
     <div id="addModal" class="modal">
@@ -396,6 +310,27 @@ include "topbar.php";
     }
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf'
+                ],
+                searching: true,
+                ordering: false,
+                paging: true,
+
+            })
+
+        })
+    </script>
 
 </body>
 </html>

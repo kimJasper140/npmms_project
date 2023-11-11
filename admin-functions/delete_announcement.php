@@ -9,13 +9,13 @@ if (isset($_SESSION['username']) && $_SESSION['roles'] == 'admin') {
         $id = $_GET['id'];
 
         // Delete the announcement from the database
-        $query = "DELETE FROM announcements WHERE id = $id";
+        $query = "UPDATE `announcements` SET `status`='hidden' WHERE id = $id";
         if ($conn->query($query)) {
             // Redirect to the announcements page after successful deletion
             header("location: ../admin/annoucement.php");
         } else {
             // Display an error message if deletion fails
-            echo "Error deleting announcement: ";
+            echo "Error Archiving announcement: ";
         }
     } else {
         // Announcement ID not provided
