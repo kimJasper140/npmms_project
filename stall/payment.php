@@ -1,6 +1,12 @@
-<?
+<?php
 session_start();
+include("../config/config.php");
+
+$sqlimage = "SELECT content FROM `resources` WHERE `id` = 5";
+$result = mysqli_query($conn, $sqlimage);
+$recipientImage = mysqli_fetch_assoc($result);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,14 +20,39 @@ session_start();
 </head>
 
 <body class="body" style="margin-bottom:5%;">
-<?php
-include "barpage/topba.php";
-?>
+    <?php include "barpage/topba.php"; ?>
+
     <div class="container mt-4">
         <h4 class="text-center">Pay here</h4>
         <div class="text-center">
-            <img src="../images/pay.jpg" alt="Pay Here" style="max-width: 50%;">
+            <?php
+            if (!empty($recipientImage) && isset($recipientImage['content'])) {
+                echo '<img class="custom-icon" src="../admin/' . $recipientImage['content'] . '" alt="Profile Picture">';
+            } else {
+                echo '<img class="custom-icon" src="profile/default.jpeg" alt="Default Profile Picture">';
+            }
+            ?>
         </div>
+        <br>
+        <div style=" text-align: inter-word;">
+        <b><i><center> Tagubilin sa Pagkuha ng Litratong Resibo </b>
+            <hr>
+
+
+            1.Upang mapadali ang pagproseso ng iyong bayad, mangyaring sundan ang mga sumusunod na hakbang sa pagkuha ng
+            litratong resibo:<br><br>
+
+            2.Siguruhing malinaw ang litrato ng resibo. Ilagay ito sa isang maayos na ilaw at iwasan ang anumang anino o
+            blur.<br><br>
+
+            3.Tiyakin na mabasa ang lahat ng impormasyon sa resibo, lalo na ang halaga ng bayad, petsa, at iba pang
+            mahahalagang detalye.<br><br>
+
+            4.Ilagay ang pangalan na nasa resibo. Siguruhing mabasa ito nang maayos upang mapadali ang pag-verify ng iyong
+            transaksyon.<br><br>
+
+            5.Salamat sa iyong kooperasyon! Ang malinaw na litrato ay magiging tulong sa mabilis at maayos na pagproseso
+            ng iyong bayad.<br><br></i></center>
         <h1 class="mt-4 text-center">Payment Form</h1>
 
         <form action="payment_process.php" method="post" enctype="multipart/form-data">
@@ -53,6 +84,7 @@ include "barpage/topba.php";
             <div class="text-center">
                 <input type="submit" class="btn btn-primary" value="Submit Payment">
             </div>
+           
         </form>
 
     </div>
