@@ -207,14 +207,14 @@ include "checking_user.php";
                                     <?php echo $row['status']; ?>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-action" data-toggle="modal"
-                                        data-target="#editUserModal<?php echo $row['user_id']; ?>">
-                                        <i class="fas fa-edit fa-xs"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-action" data-toggle="modal"
-                                        data-target="#deactivateUserModal<?php echo $row['user_id']; ?>">
-                                        <i class="fas fa-times fa-xs"></i>
-                                    </button>
+                                    <?php
+                                    echo "<button type='button' class='btn btn-primary btn-action' data-toggle='modal' data-target='#editUserModal" . $row['user_id'] . "'> <i class='fas fa-edit fa-xs'></i> </button>";
+                                    if($row['name'] == "admin"){
+                                        echo "<button type='button' class='btn btn-danger btn-action' data-toggle='modal' data-target='#deactivateUserModal" . $row['user_id'] . "' disabled> <i class='fas fa-times fa-xs'></i></button>";
+                                    } else{
+                                        echo "<button type='button' class='btn btn-danger btn-action' data-toggle='modal' data-target='#deactivateUserModal" . $row['user_id'] . "'> <i class='fas fa-times fa-xs'></i></button>";
+                                    }
+                                    ?>
                                 </td>
                             </tr>
 
