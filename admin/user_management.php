@@ -342,7 +342,6 @@ include "checking_user.php";
                                     <option value="">Select Role</option>
                                     <option value="Admin">Admin</option>
                                     <option value="staff">Staff</option>
-                                    <option value="stall_owner">Stall Owner</option>
                                 </select>
                             </div>
                             <div class="form-group">
