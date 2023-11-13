@@ -31,6 +31,61 @@ include "checking_user.php";
         //
       }
     }
+    function checkNameValidity() {
+            var name = document.getElementById("name_").value;
+            var nameMessage = document.getElementById("nameValidity");
+
+            // Reset the message
+            nameMessage.innerHTML = '';
+
+            // Define the regular expression for name validation
+            var nameRegex = /^[A-Za-z\-\'\s]+$/;
+
+            // Check the condition and update the message
+            if (!name.match(nameRegex)) {
+                nameMessage.innerHTML = 'Invalid name format. Please use letters, hyphens, apostrophes, and spaces only.';
+                nameMessage.style.color = 'red';
+            }
+        }
+    
+        function checkPasswordStrength() {
+            var password = document.getElementById("pass_").value;
+            var strengthMessage = document.getElementById("passwordStrength");
+
+            // Reset the message
+            strengthMessage.innerHTML = '';
+
+            // Define the regular expressions for password strength
+            var upperCaseRegex = /[A-Z]/g;
+            var lowerCaseRegex = /[a-z]/g;
+            var digitRegex = /\d/g;
+            var specialCharRegex = /[^A-Za-z0-9]/g;
+
+            // Check conditions and update the message
+            if (password.length < 8) {
+                strengthMessage.innerHTML += 'Password must be at least 8 characters. ';
+            }
+            if (!password.match(upperCaseRegex)) {
+                strengthMessage.innerHTML += 'Uppercase letter is required. ';
+            }
+            if (!password.match(lowerCaseRegex)) {
+                strengthMessage.innerHTML += 'Lowercase letter is required. ';
+            }
+            if (!password.match(digitRegex)) {
+                strengthMessage.innerHTML += 'Digit is required. ';
+            }
+            if (!password.match(specialCharRegex)) {
+                strengthMessage.innerHTML += 'Special character is required. ';
+            }
+
+            // Display the message with appropriate styling
+            if (strengthMessage.innerHTML !== '') {
+                strengthMessage.style.color = 'red';
+            } else {
+                strengthMessage.innerHTML = 'Password strength is good.';
+                strengthMessage.style.color = 'green';
+            }
+        }
 
 
 
@@ -97,17 +152,16 @@ include "checking_user.php";
                                 echo "<script>alert('Error: ' . $conn->error);</script>";
                             }
                         }else {
-                            echo "<script>alert('Username had been already taken. Please use another username.');</script>";
+                            echo "<script>alert('Username had been already taken. Please use another username And Try Again');</script>";
                             echo "<script>window.location.href = '{$_SERVER['PHP_SELF']}';</script>";
                         }
 
                     } else {
-                        echo "<script>alert('Email already exists');</script>";
+                        echo "<script>alert('Email already exists please Try Another Email ');</script>";
                         echo "<script>window.location.href = '{$_SERVER['PHP_SELF']}';</script>";
                     }
                 }else {
-                    echo "<script>alert('Invalid Password Format');</script>";
-                    echo "<script>window.location.href = '{$_SERVER['PHP_SELF']}';</script>";
+                   
                 }
             } else {
                 echo "<script>alert('Invalid name format');</script>;";
@@ -314,11 +368,13 @@ include "checking_user.php";
                         <div class="modal-header">
                             <h4 class="modal-title">Add New User</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                           
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" id ="name_" class="form-control" name="name" required>
+                                <input type="text" id ="name_" class="form-control" name="name" onkeyup="checkNameValidity()" required>
+                                <span id="nameValidity"></span>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
@@ -334,7 +390,8 @@ include "checking_user.php";
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" id="pass_" class="form-control" name="password" required>
+                                <input type="password" id="pass_" class="form-control" name="password" required onkeyup="checkPasswordStrength()">
+                                <span id="passwordStrength"></span>
                             </div>
                             <div class="form-group">
                                 <label>Role</label>
@@ -342,6 +399,7 @@ include "checking_user.php";
                                     <option value="">Select Role</option>
                                     <option value="Admin">Admin</option>
                                     <option value="staff">Staff</option>
+                                    
                                 </select>
                             </div>
                             <div class="form-group">
@@ -378,9 +436,11 @@ include "checking_user.php";
                 })
 
             })
-        </script>
 
- 
+
+           </script>
+
+            
 
 
     </body>
