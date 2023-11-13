@@ -1,6 +1,4 @@
 <?php
-// Your existing PHP code for fetching payment data is correct and should work as is.
-// Just make sure you have established a connection to the database using config.php.
 require_once '../config/config.php';
 session_start();
 // Function to fetch payment data from the database
@@ -119,9 +117,10 @@ include "../tempplate/loading_screen.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Payment | Admin</title>
+    <title> Payment | Admin</title>
     <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
 
     <!-- Add custom CSS for image zoom -->
     <style>
@@ -154,16 +153,19 @@ include "../tempplate/loading_screen.php";
 <body>
 
     <div class="container" style="margin-top:5%;">
-        <h2 class="mt-4">Online Payment</h2>
+        <h2 class="mt-4">Payment Section</h2>
+        <h3 class="mt-4">Payment Details</h3>
+        <hr>
         <button type="button" class="btn btn-success" onclick="showPage('monthly-payment.php')">Payment History</button>
         <button type="button" class="btn btn-success" onclick="showPage('payment_reports.php')">Payment Reports</button>
         <button type="button" class="btn btn-success" onclick="showPage('payment-setting.php')">Change Recipient</button>
-        <h3 class="mt-4">Payment Details</h3>
+        
+        
 
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
-                    <tr>
+                <tr class="text-center">
                         <th>ID</th>
                         <th>Account Name</th>
                         <th>Transaction</th>
@@ -173,7 +175,7 @@ include "../tempplate/loading_screen.php";
                         <th>Image</th>
                         <th>Remarks</th>
                         <th>OR Number</th>
-                        <th>Action</th> <!-- Add a new column for the action button -->
+                        <th>Action</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -204,9 +206,9 @@ include "../tempplate/loading_screen.php";
                             </td>
                             <td><?php echo $payment['remarks']; ?></td>
                             <td><?php echo $payment['or_generated']; ?></td>
-                            <td>
+                            <td style="vertical-align:middle;">
                                 <?php if ($payment['status'] === 'Pending') : ?>
-                                    <button class="btn btn-primary verify-btn" data-payment-id="<?php echo $payment['id']; ?>" data-toggle="modal" data-target="#adminLoginModal">Verify Payment</button>
+                                    <button class="btn btn-primary verify-btn btn-sm"  data-payment-id="<?php echo $payment['id']; ?>" data-toggle="modal" data-target="#adminLoginModal">Verify Payment</button>
                                 <?php else : ?>
                                     <span class="text-success">Paid</span>
                                 <?php endif; ?>
@@ -222,6 +224,12 @@ include "../tempplate/loading_screen.php";
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.js"></script>
     <script>
         $(document).ready(function () {
             // Function to handle the click event on the image
@@ -237,6 +245,23 @@ include "../tempplate/loading_screen.php";
                 $('#payment_id').val(paymentId);
             });
         });
+
+        $(document).ready(function() {
+            $('table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf'
+                ],
+                searching: true,
+                ordering: true,
+                paging: true,
+                "order": [
+                    [1, "desc"]
+                ],
+
+            })
+
+        })
     </script>
 
     <!-- Modal for image zoom effect -->
@@ -247,7 +272,7 @@ include "../tempplate/loading_screen.php";
                     <img id="zoomModalImage" src="" alt="Payment Image" class="img-fluid">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                 </div>
             </div>
         </div>
@@ -274,7 +299,7 @@ include "../tempplate/loading_screen.php";
                             <input type="password" class="form-control" id="admin_password" name="admin_password" required>
                         </div>
                         <input type="hidden" name="payment_id" id="payment_id">
-                        <button type="submit" class="btn btn-primary" name="verify_payment">Verify Payment</button>
+                        <button type="submit" class="btn btn-primary btn-sm" name="verify_payment" >Verify Payment</button>
                     </form>
                 </div>
             </div>
