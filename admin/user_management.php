@@ -86,9 +86,6 @@ include "checking_user.php";
                 strengthMessage.style.color = 'green';
             }
         }
-
-
-
   </script>
     <body>
 
