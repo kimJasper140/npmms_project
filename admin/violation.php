@@ -22,10 +22,8 @@ $conn->close();
     <title>Violation Report</title>
     <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Add necessary CSS and JS libraries for DataTables -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    
+
 </head>
 
 <body>
@@ -35,7 +33,8 @@ $conn->close();
     ?>
     <div class="container mt-5">
         <h1 style="margin-top:7%;">Violation Report</h1>
-        <table id="violationTable" class="table table-bordered">
+        <hr>
+        <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
                     <th>Violation ID</th>
@@ -80,7 +79,28 @@ $conn->close();
     </div>
 
     <!-- Add Bootstrap JS link -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf'
+                ],
+                searching: true,
+                ordering: false,
+                paging: true,
+
+            })
+
+        })
+    </script>
+    
 </body>
 
 </html>

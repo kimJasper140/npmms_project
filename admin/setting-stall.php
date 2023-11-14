@@ -105,9 +105,9 @@ include "topbar.php";
                         // Store the stall data in the data-stall attribute
                         echo '<div id="' . $cardId . '" class="stall-card ' . $status . '" data-stall=\'' . json_encode($row) . '\' onclick="openEditModal(\'' . $cardId . '\')">';
                         echo '<img src="' . htmlspecialchars($row['image']) . '" class="stall-image">';
-                        echo '<div class="stall-no">Stall Number: ' . htmlspecialchars($row['stall_no']) . '</div>';
+                        echo '<div class="stall-no">Description: ' . htmlspecialchars($row['stall_no']) . '</div>';
                         echo '<div>Status: ' . ucfirst(htmlspecialchars($row['status'])) . '</div>';
-						echo '<div>Size: ' . htmlspecialchars($row['size']). '</div>';
+						echo '<div>Description: ' . htmlspecialchars($row['size']). '</div>';
                         echo '</div>';
                     }
                     echo '</div>';
@@ -142,7 +142,7 @@ include "topbar.php";
                         // Store the stall data in the data-stall attribute
                         echo '<div id="' . $cardId . '" class="stall-card ' . $status . '" data-stall=\'' . json_encode($row) . '\' onclick="openEditModal(\'' . $cardId . '\')">';
                         echo '<img src="' . htmlspecialchars($row['image']) . '" class="stall-image">';
-                        echo '<div class="stall-no">Stall Number: ' . htmlspecialchars($row['stall_no']) . '</div>';
+                        echo '<div class="stall-no">Description: ' . htmlspecialchars($row['stall_no']) . '</div>';
                         echo '<div>Status: ' . ucfirst(htmlspecialchars($row['status'])) . '</div>';
                         echo '</div>';
                     }
@@ -180,7 +180,7 @@ include "topbar.php";
                         <input type="text" class="form-control" id="newStallNo" name="newStallNo" required>
                     </div>
 					<div class="mb-3">
-						<label for="newStallSize" class="form-label">Stall Size</label>
+						<label for="newStallSize" class="form-label">Description:</label>
 						<input type="text" class="form-control" id = "newStallSize" name = "newStallSize">
 					</div>
                     <div class="mb-3">
@@ -225,7 +225,7 @@ include "topbar.php";
                         <input type="text" class="form-control" id="availableStallNo" name="availableStallNo">
                     </div>
 					<div class="mb-3">
-						<label for="stallSize" class="form-label">Stall Size</label>
+						<label for="stallSize" class="form-label">Description:</label>
 						<input type="text" class="form-control" id = "stallSize" name = "stallSize">
 					</div>
                     <div class="mb-3">

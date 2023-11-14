@@ -288,14 +288,16 @@ include "header-home.php";
 </div>
 
 
-            <label for="name">Full Name:</label><br>
-            <input type="text" id="name" name="name" required><br>
+<label for="name">Full Name:</label><br>
+            <input type="text" id="name" name="name" onkeyup="checkNameValidity()" required> <span id="nameValidity"></span><br>
 
             <label for="age">Age:</label><br>
-            <input type="text" id="age" name="age" required><br>
-
+            <input type="text" id="age" name="age" onkeyup="validateAge()" required><span id="ageError" class="text-danger"></span><br>
+            
             <label for="Contact">Contact:</label><br>
-            <input type="text" id="Contact" name="Contact" required><br>
+            <input type="number" id="Contact" name="Contact" oninput="validateContact()" required>
+            <span id="contactError" style="color: red;"></span><br>
+                    
 
             <label for="email">Email:</label><br>
             <input type="text" id="email" name="email" required><br>
@@ -578,6 +580,55 @@ include "header-home.php";
             xhr.open("POST", "error_handler.php", true);
             xhr.send("data=" + err);
         }
+        function checkNameValidity() {
+            var name = document.getElementById("name").value;
+            var nameMessage = document.getElementById("nameValidity");
+
+            // Reset the message
+            nameMessage.innerHTML = '';
+
+            // Define the regular expression for name validation
+            var nameRegex = /^[A-Za-z\-\'\s]+$/;
+
+            // Check the condition and update the message
+            if (!name.match(nameRegex)) {
+                nameMessage.innerHTML = 'Invalid name format. Please use letters, hyphens, apostrophes, and spaces only.';
+                nameMessage.style.color = 'red';
+            }
+        }
+        function validateAge() {
+        var age = document.getElementById('age').value;
+
+        if (isNaN(age) || age < 18 ) {
+            document.getElementById('ageError').innerHTML = 'Age must be  18 Above.';
+            return false;
+        }
+        if (age > 100){
+            document.getElementById('ageError').innerHTML = 'Invalid Age';
+            return false;
+        }
+
+        // Clear any previous error message
+        document.getElementById('ageError').innerHTML = '';
+
+        return true;
+    }
+    
+    function validateContact() {
+        var contact = document.getElementById("Contact").value;
+        var contactError = document.getElementById("contactError");
+
+        // Check if contact length is 11 or 12
+        if (contact.length !== 11 && contact.length !== 12) {
+            contactError.innerHTML = 'Contact must be 11 or 12 digits.';
+        } else {
+            contactError.innerHTML = '';
+        }
+    }
+
+        
+
+
 </script>
 
 
