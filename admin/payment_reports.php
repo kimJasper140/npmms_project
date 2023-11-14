@@ -184,5 +184,55 @@ include "../tempplate/loading_screen.php";
                 </div>
             </div>
         </div>
+        <script>
+            function generateReport() {
+                // Make an AJAX request to a PHP script that fetches data from the database
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        generateTables(data);
+                    }
+                };
+                xhr.open("GET", "fetch_data.php", true);
+                xhr.send();
+            }
+
+            function generateTables(data) {
+                // Remove existing tables if any
+                var existingTables = document.querySelectorAll('table');
+                existingTables.forEach(function(table) {
+                    table.parentNode.removeChild(table);
+                });
+
+                // Generate tables based on the data
+                data.forEach(function(tableData) {
+                    var table = document.createElement('table');
+                    table.border = '1';
+
+                    // Add table headers
+                    var thead = table.createTHead();
+                    var headerRow = thead.insertRow();
+                    for (var key in tableData[0]) {
+                        var th = document.createElement('th');
+                        th.appendChild(document.createTextNode(key));
+                        headerRow.appendChild(th);
+                    }
+
+                    // Add table body
+                    var tbody = table.createTBody();
+                    tableData.forEach(function(rowData) {
+                        var row = tbody.insertRow();
+                        for (var key in rowData) {
+                            var cell = row.insertCell();
+                            cell.appendChild(document.createTextNode(rowData[key]));
+                        }
+                    });
+
+                    // Append the new table to the body
+                    document.body.appendChild(table);
+                });
+            }
+        </script>
     </body>
 </html>
