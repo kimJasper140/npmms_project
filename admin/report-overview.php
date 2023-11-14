@@ -38,7 +38,7 @@ session_start();
     </style>
     </head>
     <body>
-        <button type="button" class="btn btn-success" onclick="showPage('payment_reports.php')"></button>
+        <button type="button" class="btn btn-success" onclick="showPage('payment_reports.php')">Back</button>
         <div class="container" style="margin-top:5%;">
             <h2 class="mt-4">Report Overview</h2>
     
@@ -46,12 +46,18 @@ session_start();
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Month</th>
-                            <th>Sales</th>
-                            <th>Paid</th>
-                            <th>Unpaid</th>
-                            <th>Leased</th>
-                            <th>Action</th> <!-- Add a new column for the action button -->
+                            <th>Stall No</th>
+                            <th>Stall Owner</th>
+                            <th>Monthly Rental</th>
+                            <th>Stall Extension</th>
+                            <th>Payment Monthly Rental</th>
+                            <th>Stall Extension Fee</th>
+                            <th>Penalty</th>
+                            <th>Interest</th>
+                            <th>OR Number</th>
+                            <th>Data</th>
+                            <th>Total Amount</th>
+                            <th>Remarks</th>
                         </tr>
                     </thead>
                     <tbody>

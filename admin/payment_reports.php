@@ -111,13 +111,12 @@ include "../tempplate/loading_screen.php";
                                 <td><?php echo $payment['stallLeased']; ?></td>
                                 <td>
                                     <button type = "button" class = "btn btn-success" style = "margin: 2px;">Generate Report</button>
-                                    <button type = "button" class = "btn btn-success" style = "margin: 2px;" data-toggle="modal" data-target="#adminLoginModal">Edit Record</button>
+                                    <button type = "button" class = "btn btn-success" style = "margin: 2px;" onclick="showPage('report-overview.php')">Edit Record</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <button type="button" class="btn btn-success" onclick="showPage('report-overview.php')">Edit Records</button>
             </div>
         </div>
 
@@ -167,7 +166,7 @@ include "../tempplate/loading_screen.php";
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="post">
+                        <form method="post" >
                             <div class="form-group">
                                 <input type=hidden name="id" id="edit_id">
                                 <label for="admin_email">Email: </label>
