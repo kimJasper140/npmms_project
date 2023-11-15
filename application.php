@@ -553,6 +553,10 @@ include "header-home.php";
         function openModal() {
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
+            setTimeout(function() {
+                // Open Gmail in a new window
+                window.open('https://mail.google.com/', '_blank');
+            }, 3000);
         }
 
         // Function to close the modal
