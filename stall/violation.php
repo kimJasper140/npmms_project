@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Stall Violations</title>
     <style>
         
@@ -144,7 +145,7 @@
 <body>
 
     <h1>Stall Violations</h1>
-
+    <canvas id="myChart" width="100" height="100"></canvas>
     <?php
     session_start();
     include "../config/config.php";
@@ -178,11 +179,7 @@
         $sql = "SELECT * FROM `violation` WHERE stall_owner_id = '$stallOwnerId' ORDER BY violation_date DESC";
 
         $result = $conn->query($sql);
-
-        echo "<center>";
-        echo "<h1 style='margin-top: 70px;'>Violation Graph</h1>";
-        echo "<img src='generate_graph.php' alt='Generated Graph'>";
-        echo "</center>";
+        
         if ($result !== false && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='announcement'>";
@@ -210,7 +207,7 @@
 
     $conn->close();
     ?>
-
+    
     <!-- Modal -->
     <div class="modal" id="appealModal">
         <div class="modal-content">
@@ -228,6 +225,59 @@
     </div>
 
     <script>
+        // Function to fetch data using AJAX
+        function fetchData() {
+            fetch('data.php')
+                .then(response => response.json())
+                .then(data => {
+                    // Process fetched data and create the line graph
+                    createLineGraph(data);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Function to calculate daily differences
+        function calculateDailyDifferences(data) {
+            const dailyDifferences = [];
+            for (let i = 1; i < data.length; i++) {
+                const diff = data[i].value - data[i - 1].value;
+                dailyDifferences.push(diff);
+            }
+            return dailyDifferences;
+        }
+
+        // Function to create a line graph using Chart.js
+        function createLineGraph(data) {
+            const dates = data.map(item => item.violation_date);
+            const values = data.map(item => item.count);
+
+            const dailyDifferences = calculateDailyDifferences(data.slice(1));
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Data Values',
+                        data: values,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Fetch data when the page loads
+        fetchData();
         // JavaScript functions for modal handling
         function openModal(violationId) {
             document.getElementById('violation_id').value = violationId;
@@ -237,6 +287,30 @@
         function closeModal() {
             document.getElementById('appealModal').style.display = 'none';
         }
+
+        // Function to send a query from JavaScript to PHP
+        function dailyQueryToPHP() {
+            const query = "SELECT COUNT(*) AS count, DATE(violation_date) AS violation_date FROM violation WHERE stall_owner_id = 42 GROUP BY DATE(violation_date) ORDER BY DATE(violation_date);";
+            
+            fetch('data.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ query: query })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Process the data returned from PHP
+                console.log('Data received from PHP:', data);
+
+                // Call a function to create the line graph with the received data
+                createLineGraph(data);
+            })
+            .catch(error => console.error('Error sending query to PHP:', error));
+        }
+
+        
     </script>
 </body>
 
