@@ -541,13 +541,6 @@ INSERT INTO `transactions` (months, salesCount, paidCount, unpaidCount, stallLea
 ('June',0,0,0,0,2024), ('July',0,0,0,0,2024), ('August',0,0,0,0,2024),('September',0,0,0,0,2024),
 ('October',0,0,0,0,2024), ('November',0,0,0,0,2024),('December',0,0,0,0,2024);
 
-CREATE TABLE `reports` (
-  `report_id` int(11) PRIMARY KEY AUTO_INCREMENT,
-  `stall_id` int(11),
-  FOREIGN KEY (`stall_id`) REFERENCES `stall_owner`(`id`),
-  `content_id` int(11),
-  FOREIGN KEY (`content_id`) REFERENCES `monthly_payment_details`(`id`)
-);
 
 --
 -- Indexes for dumped tables

@@ -58,7 +58,21 @@ if (isset($_POST['approveConfirm'])) {
     if (!$mail->send()) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
-        echo '<script>alert("Email sent!");</script>';
+        echo "<script>";
+        echo "if ('Notification' in window) {";
+        echo "  Notification.requestPermission().then(function(permission) {";
+        echo "    if (permission === 'granted') {";
+        echo "      var notification = new Notification('Pre-Application Approved', {";
+        echo "        body: 'The pre-application of $applicantName had been approved.'";
+        echo "      });";
+        echo "      notification.onclick = function(event) {";
+        echo "        event.preventDefault();";
+        echo "        window.location.href = 'https://naujan-public-market-ms.epizy.com/';"; // Replace with the URL you want to redirect to
+        echo "      };";
+        echo "    }";
+        echo "  });";
+        echo "}";
+        echo "</script>";
     }
 }
 
@@ -97,7 +111,21 @@ if (isset($_POST['declineConfirm'])) {
     if (!$mail->send()) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
-        echo '<script>alert("Email sent!");</script>';
+        echo "<script>";
+        echo "if ('Notification' in window) {";
+        echo "  Notification.requestPermission().then(function(permission) {";
+        echo "    if (permission === 'granted') {";
+        echo "      var notification = new Notification('Pre-Application Declined', {";
+        echo "        body: 'The pre-application of $applicantName had been declined.'";
+        echo "      });";
+        echo "      notification.onclick = function(event) {";
+        echo "        event.preventDefault();";
+        echo "        window.location.href = 'https://naujan-public-market-ms.epizy.com/';"; // Replace with the URL you want to redirect to
+        echo "      };";
+        echo "    }";
+        echo "  });";
+        echo "}";
+        echo "</script>";
     }
 }
 
@@ -256,6 +284,8 @@ $applicationsResult = mysqli_query($conn, $query);
             appIdInput.value = appId;
         }
     </script>
+
+    <script src="notification.js">
 </body>
 
 </html>

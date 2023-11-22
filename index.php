@@ -339,11 +339,39 @@ include "config/config.php";
     <?php
     // Check if success message is set
     if (isset($_GET['success'])) {
-      echo '<script>alert("Feedback submitted successfully.");</script>';
+      echo "<script>";
+      echo "if ('Notification' in window) {";
+      echo "  Notification.requestPermission().then(function(permission) {";
+      echo "    if (permission === 'granted') {";
+      echo "      var notification = new Notification('Submitted Successfully', {";
+      echo "        body: 'Your feedback had been sumbitted successfully.'";
+      echo "      });";
+      echo "      notification.onclick = function(event) {";
+      echo "        event.preventDefault();";
+      echo "        window.location.href = 'https://naujan-public-market-ms.epizy.com/';"; // Replace with the URL you want to redirect to
+      echo "      };";
+      echo "    }";
+      echo "  });";
+      echo "}";
+      echo "</script>";
     }
     // Check if error message is set
     elseif (isset($_GET['error'])) {
-      echo '<script>alert("Error adding feedback.");</script>';
+      echo "<script>";
+      echo "if ('Notification' in window) {";
+      echo "  Notification.requestPermission().then(function(permission) {";
+      echo "    if (permission === 'granted') {";
+      echo "      var notification = new Notification('Feedback Submission Failed', {";
+      echo "        body: 'Something went wrong. Please refresh the website and try again.'";
+      echo "      });";
+      echo "      notification.onclick = function(event) {";
+      echo "        event.preventDefault();";
+      echo "        window.location.href = 'https://naujan-public-market-ms.epizy.com/';"; // Replace with the URL you want to redirect to
+      echo "      };";
+      echo "    }";
+      echo "  });";
+      echo "}";
+      echo "</script>";
     }
     ?>
     <form action="admin-functions/add_feedback.php" method="post">
