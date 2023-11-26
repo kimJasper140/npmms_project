@@ -27,13 +27,30 @@ function verifyAdminLogin($email, $password)
     }
     return false;
 }
+
 function deleteRecords($transac_id){
     global $conn;
-    $sql = "DELETE FROM transactions WHERE transaction_id = '$transac_id'";
-    $result =  $conn->query($sql);
-    if ($result->num_rows===1){
+    $sql_check = "SELECT * FROM transactions WHERE transaction_id = $transac_id";
+    $result_check = $conn->query($sql_check);
 
+    if ($result_check->num_rows > 0) {
+        // Data exists, perform delete query
+        $sql_delete = "DELETE FROM transactions WHERE transaction_id = $transac_id";
+
+        if ($conn->query($sql_delete) === TRUE) {
+            echo "<script>alert('Records had been successfully deleted')</script>";
+        } else {
+            echo "Error deleting record: " . $conn->error;
+        }
+    } else {
+        // No data found
+        echo "No data to be found";
     }
+}
+
+function generateReport(){
+    global $conn;
+    $sql = "SELECT * FROM monthly_payment_details";
 }
 $paymentData = getPaymentData();
 
@@ -82,13 +99,6 @@ include "../tempplate/loading_screen.php";
             <button type="button" class="btn btn-success" onclick="showPage('payment-setting.php')">Change Recipient</button>
 
             <h3 class="mt-4">Transaction Log</h3>
-			<select input type = "text" name = "announcement" id = "category" class = "category_dropdown" required>
-				<option value="default">Filter by</option>
-                <option value="default">Year</option>
-                <option value="default">Month</option>
-                <option value="default">Weeks</option>
-			</select>
-
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -102,19 +112,19 @@ include "../tempplate/loading_screen.php";
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($paymentData as $payment) : ?>
-                            <tr>
-                                <td><?php echo $payment['months']; ?></td>
-                                <td><?php echo $payment['salesCount']; ?></td>
-                                <td><?php echo $payment['paidCount']; ?></td>
-                                <td><?php echo $payment['unpaidCount']; ?></td>
-                                <td><?php echo $payment['stallLeased']; ?></td>
-                                <td>
-                                    <button type = "button" class = "btn btn-success" style = "margin: 2px;">Generate Report</button>
-                                    <button type = "button" class = "btn btn-success" style = "margin: 2px;" onclick="showPage('report-overview.php')">Edit Record</button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                    <?php foreach ($paymentData as $index => $payment) : ?>
+                        <tr>
+                            <td><?php echo $payment['months']; ?></td>
+                            <td><?php echo $payment['salesCount']; ?></td>
+                            <td><?php echo $payment['paidCount']; ?></td>
+                            <td><?php echo $payment['unpaidCount']; ?></td>
+                            <td><?php echo $payment['stallLeased']; ?></td>
+                            <td>
+                                <button type="button" style="margin: 2px;" class="generateReportBtn" data-id="<?php echo $index + 1; ?>">Generate Report</button>
+                                <button type="button" class="btn btn-success" style="margin: 2px;" onclick="showPage('report-overview.php')">Edit Record</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -230,6 +240,21 @@ include "../tempplate/loading_screen.php";
 
                     // Append the new table to the body
                     document.body.appendChild(table);
+                });
+            }
+
+            var generateButtons = document.getElementsByClassName('generateReportBtn');
+
+            // Attach click event to each button
+            for (var i = 0; i < generateButtons.length; i++) {
+                generateButtons[i].addEventListener('click', function() {
+                    var idValue = this.getAttribute('data-id'); // Get the 'data-id' attribute value
+
+                    // Construct the URL with the dynamic ID value
+                    var url = 'generate_report.php?id=' + idValue;
+
+                    // Redirect to the generated URL
+                    window.location.href = url;
                 });
             }
         </script>

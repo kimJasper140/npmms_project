@@ -6,7 +6,7 @@
 -- Generation Time: Oct 12, 2023 at 11:28 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
-
+USE NPMMS;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -892,6 +892,9 @@ ALTER TABLE `stall_notifications`
 	
 ALTER TABLE `announcements`
 	ADD COLUMN `status` VARCHAR(255) DEFAULT NULL;
+
+ALTER TABLE `monthly_payment_details`
+  ADD COLUMN `fullname` VARCHAR(255) DEFAULT NULL;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
