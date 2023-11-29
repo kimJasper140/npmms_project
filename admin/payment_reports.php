@@ -126,7 +126,7 @@ include "../tempplate/loading_screen.php";
                             <td><?php echo $payment['stallLeased']; ?></td>
                             <td>
                                 <button type="button" style="margin: 2px;" class="generateReportBtn btn btn-success" data-id="<?php echo $payment['months'];?>">Generate Report</button>
-                                <button type="button" class="btn btn-success" style="margin: 2px;" onclick="showPage('report-overview.php')">Edit Record</button>
+                                <button type="button" class="editReportBtn btn btn-success" style="margin: 2px;" data-id="<?php echo $payment['months'];?>">Edit Record</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -257,6 +257,21 @@ include "../tempplate/loading_screen.php";
 
                     // Construct the URL with the dynamic ID value
                     var url = 'generate_report.php?month=' + monthValue;
+
+                    // Redirect to the generated URL
+                    window.location.href = url;
+                });
+            }
+
+            var editButtons = document.getElementsByClassName('editReportBtn');
+
+            // Attach click event to each button
+            for (var i = 0; i < editButtons.length; i++) {
+                editButtons[i].addEventListener('click', function() {
+                    var monthValue = this.getAttribute('data-id'); // Get the 'data-id' attribute value
+
+                    // Construct the URL with the dynamic ID value
+                    var url = 'report-overview.php?month=' + monthValue;
 
                     // Redirect to the generated URL
                     window.location.href = url;

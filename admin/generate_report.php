@@ -41,7 +41,7 @@
                         echo "<th>Total Amount</th>";
                         echo "<th>Remarks</th>";
                         echo "<th>Status</th>";
-                        echo "<th>Owner ID</th></tr>";
+                        echo "<th>Stall Number</th></tr>";
                     
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr><td>" . $row["id"] . "</td>";
@@ -61,7 +61,7 @@
                     
                         echo "</table>";
                     } else {
-                        echo "No Table Found";
+                        echo "<h2>No Table Found</h2>";
                     }
                     
 
