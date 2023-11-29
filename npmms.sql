@@ -214,7 +214,6 @@ CREATE TABLE `monthly_payment_details` (
   `id` int(11) NOT NULL,
   `monthly_rental` decimal(10,2) DEFAULT NULL,
   `extension_rental` decimal(10,2) DEFAULT NULL,
-  `paid` decimal(10,2) DEFAULT NULL,
   `stall_extension_fee` decimal(10,2) DEFAULT NULL,
   `penalty_25` decimal(10,2) DEFAULT NULL,
   `interest_2` decimal(10,2) DEFAULT NULL,
@@ -222,8 +221,9 @@ CREATE TABLE `monthly_payment_details` (
   `date` date DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
   `remarks` text DEFAULT NULL,
-  `status` enum('Paid','Unpaid') DEFAULT 'Unpaid',
-  `owner_id` int(11) DEFAULT NULL
+  `status` TEXT DEFAULT NULL,
+  `owner_id` int(11) DEFAULT NULL,
+  `month` VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

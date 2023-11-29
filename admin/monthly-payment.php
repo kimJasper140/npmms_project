@@ -77,14 +77,15 @@ function createReport($id){
         // Extract data for insertion
         $account_name = $payment_data['account_name'];
         $date = $payment_data['date'];
-        $status = $payment_data['status'];
+        $status = "Paid";
         $total_amount = $payment_data['amount'];
         $remarks = $payment_data['remarks'];
         $or_no = $payment_data['or_generated'];
         $owner_id = $payment_data['stall_owner_id'];
+        $month = date('F');
 
         // Prepare and execute INSERT query
-        $insert_query = "INSERT INTO monthly_payment_details (fullname, date, status, total_amount, remarks, or_no, owner_id) VALUES ('$account_name', '$date', '$status', '$amount', '$remarks', '$or_no', '$owner_id')";
+        $insert_query = "INSERT INTO monthly_payment_details (fullname, date, status, total_amount, remarks, or_no, owner_id, month) VALUES ('$account_name', '$date', '$status', '$total_amount', '$remarks', '$or_no', '$owner_id', '$month')";
         $result_sql = $conn->query($insert_query);
 
         if ($result_sql) {
@@ -181,15 +182,19 @@ include "../tempplate/loading_screen.php";
             width: 400px;
             height: auto;
         }
+
+        body{
+            margin:5px;
+        }
     </style>
     <script>
-            function showPage(url){
-                window.location.href = url;
-            }
+        function showPage(url){
+            window.location.href = url;
+        }
     </script>
 </head>
 <body>
-
+    <button type="button" class="btn btn-success" onclick="showPage('dashboard-admin.php')">Back</button>
     <div class="container" style="margin-top:5%;">
         <h2 class="mt-4">Online Payment</h2>
         <button type="button" class="btn btn-success" onclick="showPage('monthly-payment.php')">Payment History</button>

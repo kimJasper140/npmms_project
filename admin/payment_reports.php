@@ -89,9 +89,14 @@ include "../tempplate/loading_screen.php";
             width: 400px;
             height: auto;
         }
+
+        body{
+            margin: 5px;
+        }
     </style>
     </head>
     <body>
+        <button type="button" class="btn btn-success" onclick="showPage('dashboard-admin.php')">Back</button>
         <div class="container" style="margin-top:5%;">
             <h2 class="mt-4">Records of Transaction</h2>
             <button type="button" class="btn btn-success" onclick="showPage('monthly-payment.php')" >Payment History</button>
@@ -120,7 +125,7 @@ include "../tempplate/loading_screen.php";
                             <td><?php echo $payment['unpaidCount']; ?></td>
                             <td><?php echo $payment['stallLeased']; ?></td>
                             <td>
-                                <button type="button" style="margin: 2px;" class="generateReportBtn" data-id="<?php echo $index + 1; ?>">Generate Report</button>
+                                <button type="button" style="margin: 2px;" class="generateReportBtn btn btn-success" data-id="<?php echo $payment['months'];?>">Generate Report</button>
                                 <button type="button" class="btn btn-success" style="margin: 2px;" onclick="showPage('report-overview.php')">Edit Record</button>
                             </td>
                         </tr>
@@ -248,10 +253,10 @@ include "../tempplate/loading_screen.php";
             // Attach click event to each button
             for (var i = 0; i < generateButtons.length; i++) {
                 generateButtons[i].addEventListener('click', function() {
-                    var idValue = this.getAttribute('data-id'); // Get the 'data-id' attribute value
+                    var monthValue = this.getAttribute('data-id'); // Get the 'data-id' attribute value
 
                     // Construct the URL with the dynamic ID value
-                    var url = 'generate_report.php?id=' + idValue;
+                    var url = 'generate_report.php?month=' + monthValue;
 
                     // Redirect to the generated URL
                     window.location.href = url;
