@@ -33,7 +33,6 @@
                         echo "<th>Fullname</th>";
                         echo "<th>Monthly Rental</th>";
                         echo "<th>Extension Rental</th>";
-                        echo "<th>Paid</th>";
                         echo "<th>Stall Extension Fee</th>";
                         echo "<th>Penalty</th>";
                         echo "<th>Interest</th>";
@@ -49,7 +48,6 @@
                             echo "<td>". $row["fullname"] . "</td>";
                             echo "<td>". $row["monthly_rental"] . "</td>";
                             echo "<td>". $row["extension_rental"] . "</td>";
-                            echo "<td>". $row["paid"] . "</td>";
                             echo "<td>". $row["stall_extension_fee"] . "</td>";
                             echo "<td>". $row["penalty_25"] . "</td>";
                             echo "<td>". $row["interest_2"] . "</td>";
