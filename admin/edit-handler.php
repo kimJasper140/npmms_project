@@ -15,8 +15,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save_changes'])){
     if ($conn->query($updateSql) === TRUE) {
         header("Location: report-overview.php");
     } else {
-        echo "Error updating record: " . $conn->error;
+        echo "Something went wrong. Please try again.";
     }
-
-    #header("Location: report-overview.php");
 }
+
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])){
+    $id = $_POST["paymentId"];
+
+    $deleteSql = "DELETE FROM monthly_payment_details WHERE id='$id'";
+    if ($conn->query($deleteSql) === TRUE) {
+        header("Location: report-overview.php");
+    } else {
+        echo "Something went wrong. Please try again.";
+    }
+}
+?>

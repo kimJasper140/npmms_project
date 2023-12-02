@@ -102,7 +102,8 @@ session_start();
                                 echo "<td>".$payment['status']."</td>";
                                 echo "<td>".$payment['owner_id']."</td>";
                                 echo "<td>";
-                                echo "<button type='button' onclick='openModal(this)' class='edit-button btn btn-primary' data-id=". $payment['id'] .">Edit</button>";  
+                                echo "<button type='button' onclick='openModal(this)' class='edit-button btn btn-primary' data-id=". $payment['id'] .">Edit</button>";
+                                echo "<button type='button' onclick='deleteData(this)' class='btn btn-primary' data-id=". $payment['id'] .">Delete</button>";  
                                 echo "</td>";
                                 echo "</tr>";
                             }
@@ -112,17 +113,41 @@ session_start();
                 </table>
             </div>
         </div>
-        <div class="modal scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="adminLoginModalLabel" aria-hidden="true">
+
+        <!-- Report Editing Modal -->
+        <div class="modal scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="reportEditModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="adminLoginModalLabel">Information Editor</h5>
+                        <h5 class="modal-title" id="reportEditModalLabel">Information Editor</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true" onclick="closeModal()">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body" id="paymentDetailsContent">
-                        
+                        <!--This is where the modal contents will appear from get_payment_data.php-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report Deletion Modal -->
+        <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="reportDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reportDeleteModalLabel">Information Editor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" onclick="closeModal()">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="edit-handler.php" method="post">
+                            <input type="hidden" name="paymentId" id="payment_id">
+                            <h6>Deleting this data will be permanent and non-recoverable. Are you sure you want to delete it?</h6>
+                            <input type="submit" class='btn btn-primary' name="delete">
+                            <button class='btn btn-primary' onclick="closeModal()">Cancel</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -135,7 +160,7 @@ session_start();
             }
             // Get the modal
             var modal = document.getElementById("myModal");
-            
+            var _modal = document.getElementById("deleteModal");
 
             // Function to open the modal
             function openModal(button) {
@@ -146,7 +171,13 @@ session_start();
             // Function to close the modal
             function closeModal() {
                 modal.style.display = "none";
-                
+                _modal.style.display = "none";
+            }
+
+            function deleteData(button){
+                _modal.style.display = "block";
+                var paymentId = button.getAttribute('data-id'); // Get the payment ID from data-id attribute
+                document.getElementById("payment_id").value = paymentId;
             }
 
             // Close modal if user clicks outside the modal content
@@ -172,7 +203,7 @@ session_start();
                             alert('Error occurred while fetching payment details.');
                         }
                     });
-                }
+            }
         </script>
     </body>
 </html>
