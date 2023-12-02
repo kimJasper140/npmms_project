@@ -60,7 +60,6 @@ session_start();
                     <thead>
                         <tr>
                             <!--<table border='1'>--->
-                            <th>ID</th>
                             <th>Fullname</th>
                             <th>Monthly Rental</th>
                             <th>Extension Rental</th>
@@ -90,7 +89,6 @@ session_start();
                             $dataResult = mysqli_query($conn, $sql);
                             while ($payment = mysqli_fetch_assoc($dataResult)){   
                                 echo "<tr>";
-                                echo "<td>".$payment['id'] . "</td>";
                                 echo "<td>".$payment['fullname']."</td>";
                                 echo "<td>".$payment['monthly_rental']."</td>";
                                 echo "<td>".$payment['extension_rental']."</td>";
