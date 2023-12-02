@@ -123,79 +123,8 @@ session_start();
                             <span aria-hidden="true" onclick="closeModal()">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form method="POST">   
-                            <?php
-                                $paymentRow = array();
-
-                                if(isset($_POST['payment_id'])){
-                                    $payment_id = $_POST['payment_id'];
-                                    $sql = "SELECT * FROM monthly_payment_details WHERE id='$payment_id'";
-                                    $paymentResult = mysqli_query($conn, $sql);
-                                    $paymentRow = mysqli_fetch_assoc($paymentResult);
-                                    // Store paymentRow data in the session
-                                    $_SESSION['paymentRow'] = $paymentRow;
-                                } else {
-                                    // If payment_id is not set or if it's a GET request, retrieve data from session
-                                    if(isset($_SESSION['paymentRow'])) {
-                                        $paymentRow = $_SESSION['paymentRow'];
-                                    } else {
-                                        // Set default values or handle accordingly if session data isn't available
-                                        $paymentRow = array();
-                                    }
-                                }
-
-                            ?>
-                            <div class="form-group">
-                                <label for="flname">Full Name: </label>
-                                <input id= "flname" class="form-control" value="<?php echo $paymentRow['fullname']; ?>" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="monrent">Monthly Rental: </label>
-                                <input id= "monrent" class="form-control" name="monthly_rental">
-                            </div>
-                            <div class="form-group">
-                                <label for="extrent">Extension Rental: </label>
-                                <input id= "extrent" class="form-control" name="extension_rental">
-                            </div>
-                            <div class="form-group">
-                                <label for="stall-fee">Stall Extension Fee: </label>
-                                <input id= "stall-fee" class="form-control" name="stall_extension_fee">
-                            </div>
-                            <div class="form-group">
-                                <label for="penalty">Penalty: </label>
-                                <input id= "penalty" class="form-control" name="penalty">
-                            </div>
-                            <div class="form-group">
-                                <label for="interest">Interest: </label>
-                                <input id= "interest" class="form-control" name="interest">
-                            </div>
-                            <div class="form-group">
-                                <label for="or_num">OR Number: </label>
-                                <input id= "or_num" class="form-control" value="<?php echo $paymentRow['or_no']; ?>" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="date">Date: </label>
-                                <input id= "date" class="form-control" value="<?php echo $paymentRow['date']; ?>" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="total-amount">Total Amount: </label>
-                                <input id= "total-amount" class="form-control" value="<?php echo $paymentRow['total_amount']; ?>" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="remarks">Remarks: </label><br>
-                                <textarea type="textarea" class="remarks" id= "remarks" placeholder="Insert a Remarks"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="status">Status: </label>
-                                <input id= "status" class="form-control" value="<?php echo $paymentRow['status']; ?>" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="stall-number">Stall Number: </label>
-                                <input id= "stall-number" class="form-control" value="<?php echo $paymentRow['owner_id']; ?>" readonly>
-                            </div>
-                            <button type="submit" class="btn btn-primary" name="save_changes">Save Changes</button>
-                        </form>
+                    <div class="modal-body" id="paymentDetailsContent">
+                        
                     </div>
                 </div>
             </div>
@@ -219,6 +148,7 @@ session_start();
             // Function to close the modal
             function closeModal() {
                 modal.style.display = "none";
+                
             }
 
             // Close modal if user clicks outside the modal content
@@ -232,25 +162,19 @@ session_start();
                 var paymentId = button.getAttribute('data-id'); // Get the payment ID from data-id attribute
 
                 // AJAX request to send data to PHP
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200) {
-                            // Handle the response from PHP if needed
-                            console.log('Request successful:', xhr.responseText, paymentId);
-                            // You can add logic here to handle the response from PHP
-                        } else {
-                            console.error('Error:', xhr.status);
-                            // Handle error responses if needed
+                $.ajax({
+                        type: 'POST',
+                        url: 'get_payment_data.php', // Replace with your PHP file to retrieve payment details
+                        data: { payment_id: paymentId }, // Replace 'your_payment_id' with the actual payment ID
+                        success: function(response) {
+                            // Inject the retrieved form content into the modal body
+                            $('#paymentDetailsContent').html(response);
+                        },
+                        error: function() {
+                            alert('Error occurred while fetching payment details.');
                         }
-                    }
-                };
-
-                xhr.open('POST', '<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>', true); // Use the same file as the PHP processing script
-                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                var params = 'payment_id=' + encodeURIComponent(paymentId); // Data to send to PHP
-                xhr.send(params);
-            }
+                    });
+                }
         </script>
     </body>
 </html>

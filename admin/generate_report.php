@@ -29,7 +29,6 @@
                     if ($result->num_rows > 0) {
                         // Output data of each row
                         echo "<table border='1'>";
-                        echo "<tr><th>ID</th>";
                         echo "<th>Fullname</th>";
                         echo "<th>Monthly Rental</th>";
                         echo "<th>Extension Rental</th>";
@@ -44,7 +43,6 @@
                         echo "<th>Stall Number</th></tr>";
                     
                         while ($row = $result->fetch_assoc()) {
-                            echo "<tr><td>" . $row["id"] . "</td>";
                             echo "<td>". $row["fullname"] . "</td>";
                             echo "<td>". $row["monthly_rental"] . "</td>";
                             echo "<td>". $row["extension_rental"] . "</td>";
