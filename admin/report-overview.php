@@ -102,8 +102,9 @@ session_start();
                                 echo "<td>".$payment['status']."</td>";
                                 echo "<td>".$payment['owner_id']."</td>";
                                 echo "<td>";
-                                echo "<button type='button' onclick='openModal(this)' class='edit-button btn btn-primary' data-id=". $payment['id'] .">Edit</button>";
-                                echo "<button type='button' onclick='deleteData(this)' class='btn btn-primary' data-id=". $payment['id'] .">Delete</button>";  
+                                echo "<button type='button' onclick='' class='edit-button btn btn-success' data-id=". $payment['id'] .">Print</button>";
+                                echo "<button type='button' onclick='openModal(this)' class='edit-button btn btn-warning' data-id=". $payment['id'] .">Edit</button>";
+                                echo "<button type='button' onclick='deleteData(this)' class='btn btn-danger' data-id=". $payment['id'] .">Delete</button>";  
                                 echo "</td>";
                                 echo "</tr>";
                             }
@@ -145,8 +146,8 @@ session_start();
                         <form action="edit-handler.php" method="post">
                             <input type="hidden" name="paymentId" id="payment_id">
                             <h6>Deleting this data will be permanent and non-recoverable. Are you sure you want to delete it?</h6>
-                            <input type="submit" class='btn btn-primary' name="delete">
-                            <button class='btn btn-primary' onclick="closeModal()">Cancel</button>
+                            <input type="submit" class='btn btn-danger' name="delete">
+                            <button type="button" class='btn btn-success' onclick="closeModal()">Cancel</button>
                         </form>
                     </div>
                 </div>

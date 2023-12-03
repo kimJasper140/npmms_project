@@ -126,7 +126,7 @@ include "../tempplate/loading_screen.php";
                             <td><?php echo $payment['stallLeased']; ?></td>
                             <td>
                                 <button type="button" style="margin: 2px;" class="generateReportBtn btn btn-success" data-id="<?php echo $payment['months'];?>">Generate Report</button>
-                                <button type="button" class="editReportBtn btn btn-success" style="margin: 2px;" data-id="<?php echo $payment['months'];?>">Edit Record</button>
+                                <button type="button" class="editReportBtn btn btn-warning" style="margin: 2px;" data-id="<?php echo $payment['months'];?>">Edit Record</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
