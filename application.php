@@ -226,8 +226,6 @@ include "header-home.php";
             $email = $_POST["email"]; $_SESSION['_email'] = $email;
             $Contact = $_POST["Contact"]; $_SESSION['_contact'] = $Contact;
             $status = "pending"; $_SESSION['Stats'] = $status;
-            header("Location: app_verification.php");
-            header("Location: https://mail.google.com/");
             $my_sql = "SELECT * FROM applications WHERE email = '$email'";
 
 
