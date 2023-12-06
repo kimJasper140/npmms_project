@@ -56,8 +56,9 @@
                             echo "<td>" . $row["status"] . "</td>";
                             echo "<td>" . $row["owner_id"] . "</td></tr>";
                         }
-                    
+
                         echo "</table>";
+                        echo "<button type='button' class='btn btn-success generateReport' data-id='".$id."'>Export</button>";
                     } else {
                         echo "<h2>No Table Found</h2>";
                     }
@@ -71,6 +72,21 @@
         <script>
             function BackPage(url){
                 window.location.href=url;
+            }
+
+            var editButtons = document.getElementsByClassName('generateReport');
+
+            // Attach click event to each button
+            for (var i = 0; i < editButtons.length; i++) {
+                editButtons[i].addEventListener('click', function() {
+                    var monthValue = this.getAttribute('data-id'); // Get the 'data-id' attribute value
+
+                    // Construct the URL with the dynamic ID value
+                    var url = 'generate_report_pdf.php?month=' + monthValue;
+
+                    // Redirect to the generated URL
+                    window.location.href = url;
+                });
             }
         </script>
     </body>
