@@ -20,10 +20,11 @@ function updatePaymentStatus($paymentId)
 {
     global $conn;
 	$currentMonth = date('F');
+    $currentYear = date('Y');
 	$paidCount = 0;
     $sql = "UPDATE payment_details SET status = 'Paid' WHERE id = $paymentId";
 	$paidCount += 1;
-	$obtainSql = "SELECT paidCount FROM transactions WHERE months='$currentMonth'";
+	$obtainSql = "SELECT paidCount FROM transactions WHERE months='$currentMonth' AND years='$currentYear'";
     
 	
 	$result = mysqli_query($conn, $obtainSql);
@@ -32,12 +33,14 @@ function updatePaymentStatus($paymentId)
 		while ($row = mysqli_fetch_assoc($result)) {
 			$value = $row['paidCount'];
 			$value += 1;
-			$updateCount = "UPDATE transactions SET paidCount = '$value', salesCount = '$value', stallLeased = '$value' WHERE months = '$currentMonth'";
+			$updateCount = "UPDATE transactions SET paidCount = '$value', salesCount = '$value', stallLeased = '$value' WHERE months = '$currentMonth' AND years='$currentYear'";
 			$conn->query($updateCount);
 		}
 	} else {
 		echo "Error: " . mysqli_error($conn);
 	}
+
+    createReport($paymentId);
 	
 	return $conn->query($sql);
 }
@@ -58,6 +61,41 @@ function verifyAdminLogin($email, $password)
     }
     return false;
 }
+
+function createReport($id){
+    global $conn;
+
+    // Fetch payment details for the given ID
+    $report_query = "SELECT * FROM payment_details WHERE id=$id";
+    $result = $conn->query($report_query);
+
+    if ($result && $result->num_rows > 0) {
+        $payment_data = $result->fetch_assoc();
+
+        // Extract data for insertion
+        $account_name = $payment_data['account_name'];
+        $date = $payment_data['date'];
+        $status = "Paid";
+        $total_amount = $payment_data['amount'];
+        $remarks = $payment_data['remarks'];
+        $or_no = $payment_data['or_generated'];
+        $owner_id = $payment_data['stall_owner_id'];
+        $month = date('F');
+
+        // Prepare and execute INSERT query
+        $insert_query = "INSERT INTO monthly_payment_details (fullname, date, status, total_amount, remarks, or_no, owner_id, month) VALUES ('$account_name', '$date', '$status', '$total_amount', '$remarks', '$or_no', '$owner_id', '$month')";
+        $result_sql = $conn->query($insert_query);
+
+        if ($result_sql) {
+            echo "Report created successfully";
+        } else {
+            echo "Error: " . $conn->error;
+        }
+    } else {
+        echo "No payment details found for the provided ID";
+    }
+}
+
 
 // Handle form submission for updating payment status
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -143,15 +181,19 @@ include "../tempplate/loading_screen.php";
             width: 400px;
             height: auto;
         }
+
+        body{
+            margin:5px;
+        }
     </style>
     <script>
-            function showPage(url){
-                window.location.href = url;
-            }
+        function showPage(url){
+            window.location.href = url;
+        }
     </script>
 </head>
 <body>
-
+    <button type="button" class="btn btn-success" onclick="showPage('dashboard-admin.php')">Back</button>
     <div class="container" style="margin-top:5%;">
         <h2 class="mt-4">Payment Section</h2>
         <h3 class="mt-4">Payment Details</h3>
@@ -185,10 +227,11 @@ include "../tempplate/loading_screen.php";
 						$query = "SELECT COUNT(*) AS rowCount FROM payment_details WHERE status = 'Pending'";
 						$result = mysqli_query($conn, $query);
 						$currentMonth = date('F');
+                        $currentYear = date('Y');
 						if ($result) {
 							$row = mysqli_fetch_assoc($result);
 							$rowCount = $row['rowCount'];
-							$updateQuery = "UPDATE transactions SET unpaidCount = '$rowCount' WHERE months = '$currentMonth'";
+							$updateQuery = "UPDATE transactions SET unpaidCount = '$rowCount' WHERE months = '$currentMonth' AND years='$currentYear'";
 							$conn->query($updateQuery);
 						}
 					?>

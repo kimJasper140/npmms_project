@@ -64,6 +64,9 @@
         echo "<script>alert('Verification code did not match. Please try again.')</script>";
     }
 
+    // Set your notification message
+    $_SESSION['notification'] = '$notificationMessage';
+
     // Close database connection
     $conn->close();
     echo "<script>window.location.href='index.php';</script>";

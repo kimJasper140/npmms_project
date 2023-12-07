@@ -6,7 +6,7 @@
 -- Generation Time: Oct 12, 2023 at 11:28 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
-
+USE NPMMS;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -214,7 +214,6 @@ CREATE TABLE `monthly_payment_details` (
   `id` int(11) NOT NULL,
   `monthly_rental` decimal(10,2) DEFAULT NULL,
   `extension_rental` decimal(10,2) DEFAULT NULL,
-  `paid` decimal(10,2) DEFAULT NULL,
   `stall_extension_fee` decimal(10,2) DEFAULT NULL,
   `penalty_25` decimal(10,2) DEFAULT NULL,
   `interest_2` decimal(10,2) DEFAULT NULL,
@@ -222,8 +221,9 @@ CREATE TABLE `monthly_payment_details` (
   `date` date DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
   `remarks` text DEFAULT NULL,
-  `status` enum('Paid','Unpaid') DEFAULT 'Unpaid',
-  `owner_id` int(11) DEFAULT NULL
+  `status` TEXT DEFAULT NULL,
+  `owner_id` int(11) DEFAULT NULL,
+  `month` VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -522,7 +522,7 @@ CREATE TABLE `violation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `transactions` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`months` varchar(15) NOT NULL,
 	`salesCount` int(11) NOT NULL,
 	`paidCount` int(11) NOT NULL,
@@ -540,6 +540,8 @@ INSERT INTO `transactions` (months, salesCount, paidCount, unpaidCount, stallLea
 ('February',0,0,0,0,2024), ('March',0,0,0,0,2024), ('April',0,0,0,0,2024), ('May',0,0,0,0,2024), 
 ('June',0,0,0,0,2024), ('July',0,0,0,0,2024), ('August',0,0,0,0,2024),('September',0,0,0,0,2024),
 ('October',0,0,0,0,2024), ('November',0,0,0,0,2024),('December',0,0,0,0,2024);
+
+
 --
 -- Indexes for dumped tables
 --
@@ -887,9 +889,13 @@ ALTER TABLE `payment_details`
 
 ALTER TABLE `stall_notifications`
 	MODIFY `subject` varchar(255) NOT NULL;
+	
+ALTER TABLE `announcements`
+	ADD COLUMN `status` VARCHAR(255) DEFAULT NULL;
+
+ALTER TABLE `monthly_payment_details`
+  ADD COLUMN `fullname` VARCHAR(255) DEFAULT NULL;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
