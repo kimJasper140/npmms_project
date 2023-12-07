@@ -1,6 +1,7 @@
 <?php
 include "../config/config.php";
 include "../config/session.php";
+include "barpage/sidebar.php";
 
 if (!isset($_SESSION['username']) || $_SESSION['roles'] != 'stall_owner') {
     header("location:../index.php");

@@ -1,6 +1,6 @@
 <?php
 include "../config/config.php";
-include "../config/session.php";
+include "barpage/sidebar.php";
 
 if (!isset($_SESSION['username']) || $_SESSION['roles'] != 'stall_owner') {
     header("location:../index.php");
@@ -28,7 +28,7 @@ if (!$rowOwner || !isset($rowOwner['stall_no'])) {
 $stallNo = $rowOwner['id'];
 $queryNotifications = "SELECT * FROM stall_notifications WHERE stall_owner_id = '$stallNo' ORDER BY notification_timestamp DESC";
 $resultNotifications = mysqli_query($conn, $queryNotifications);
-print_r($updateQuery = "UPDATE stall_notifications SET notification_sent = true WHERE stall_owner_id = '$stallNo'");
+$updateQuery = "UPDATE stall_notifications SET notification_sent = true WHERE stall_owner_id = '$stallNo'";
 $updateResult = mysqli_query($conn, $updateQuery);
 
 if (!$resultNotifications) {
@@ -40,8 +40,6 @@ if (!$resultNotifications) {
 <html>
 <head>
     <title><?php echo $rowOwner['name']; ?>'s Notification Page</title>
-    <!-- Add Bootstrap CSS link here -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         /* Your additional CSS styles here */
         .notification-list {
@@ -67,7 +65,7 @@ if (!$resultNotifications) {
     </style>
 </head>
 <body>
-    <?php include "barpage/topbar.php"; ?>
+ 
 
     <div class="container mt-5">
         <div class="row">
@@ -121,5 +119,9 @@ if (!$resultNotifications) {
             });
         });
     </script>
+    <script src="barpage/js/jquery.min.js"></script>
+    <script src="barpage/js/popper.js"></script>
+    <script src="barpage/js/bootstrap.min.js"></script>
+    <script src="barpage/js/main.js"></script>
 </body>
 </html>

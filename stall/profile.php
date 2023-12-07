@@ -1,6 +1,8 @@
 <?php
+
 include "../config/config.php";
-include "../config/session.php";
+//include "../config/session.php";
+include "barpage/sidebar.php";
 
 if (!isset($_SESSION['username']) || $_SESSION['roles'] != 'stall_owner') {
     header("location:../index.php");
@@ -54,11 +56,7 @@ $rowContract = mysqli_fetch_assoc($resultContract);
 <head>
     <title>Stall Owner Profile</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f2f2f2;
-        }
+       
 
         .profile-container {
             max-width: 800px;
@@ -217,7 +215,8 @@ $rowContract = mysqli_fetch_assoc($resultContract);
             </div>
         <?php } ?>
     <?php } else { ?>
-        <p class="no-data">No stall information found.</p>
+        <p  class="no-data"><a href="stall_information.php">Set up your Account. Click here!</a></p>
+
     <?php } ?>
 </div>
             <div class="card">
@@ -237,5 +236,9 @@ $rowContract = mysqli_fetch_assoc($resultContract);
     <div class="back-btn">
         <a href="stall_dashboard.php">Back to Main Page</a>
     </div>
+    <script src="barpage/js/jquery.min.js"></script>
+    <script src="barpage/js/popper.js"></script>
+    <script src="barpage/js/bootstrap.min.js"></script>
+    <script src="barpage/js/main.js"></script>
 </body>
 </html>

@@ -1,11 +1,14 @@
+<?php
+include "../config/config.php";
+include "../admin/sidebar/sidebar.php";;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archived Announcements</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    
     <style>
        .crossed-out {
             text-decoration: line-through;
@@ -30,13 +33,7 @@
             height: auto;
             margin-top: 10px;
         }
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
+       
 
      
         .announcement {
@@ -51,7 +48,7 @@
         .announcement:hover {
             background-color: #f0f0f0;
             transform: scale(1.02); /* Add a subtle scaling effect on hover */
-        }
+        } 
 
     
         .announcement p {
@@ -62,11 +59,11 @@
             max-width: 100%;
             height: auto;
             margin-top: 15px;
-        }
+        }  */
     </style>
 </head>
 <body>
-
+    <div class="container-liquid">
     <h1 style="text-align:center;">Archived Announcements</h1>
     <button class="btn btn-secondary" onclick="window.location.href='../admin/annoucement.php'">Back</button>
     <br>
@@ -76,8 +73,7 @@
     <?php
     
     
-include "../config/config.php";
-include "checking_user.php";
+
 
     // Fetch and display archived announcements
     $sql = "SELECT * FROM announcements WHERE status = 'hidden' ORDER BY id DESC";
@@ -92,6 +88,7 @@ include "checking_user.php";
             echo "<img src='../images/" . $row['image'] . "' alt='Announcement Image'>";
 
             echo "</div>";
+            
         }
     } else {
         echo "<p>No archived announcements found.</p>";
@@ -102,4 +99,8 @@ include "checking_user.php";
     ?>
     </div>
 </body>
+<script src="sidebar/js/jquery.min.js"></script>
+    <script src="sidebar/js/popper.js"></script>
+    <script src="sidebar/js/bootstrap.min.js"></script>
+    <script src="sidebar/js/main.js"></script>
 </html>

@@ -1,7 +1,5 @@
 <?php
-include("../config/config.php");
-include "check_user.php";
-
+include "barpage/sidebar.php";
 // Handle password change form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['password_submit'])) {
   // Retrieve form data
@@ -86,9 +84,7 @@ $user = mysqli_fetch_assoc($result);
 <head>
     <title>Account Settings</title>
     <link rel="icon" href="../image/logo.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Bootstrap CSS link -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   
     <style>
        body{
     color: #8e9194;
@@ -124,17 +120,17 @@ img {
     border: 1px solid #eef0f3;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    
 }
     </style>
 </head>
 
 <body>
-    <?php
-    include "barpage/topbar.php";
-    include "barpage/sidebar.php";
+   
+    
 
   
-    ?>
+    
     <header>
         
     </header>
@@ -228,5 +224,10 @@ img {
             </div>
         </div>
     </div>
+    
 </body>
+<script src="barpage/js/jquery.min.js"></script>
+    <script src="barpage/js/popper.js"></script>
+    <script src="barpage/js/bootstrap.min.js"></script>
+    <script src="barpage/js/main.js"></script>
 </html>

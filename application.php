@@ -71,7 +71,7 @@ include "config/config.php";
         @media screen and (max-width: 768px) {
             body {
                 margin: 20px !important;
-                padding-top: 25% !important;
+                padding-top: 50px !important;
             }
 
             form {

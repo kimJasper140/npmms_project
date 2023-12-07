@@ -12,7 +12,10 @@ if (isset($_SESSION['username']) && $_SESSION['roles'] == 'admin') {
         $result = mysqli_query($conn, $query);
 
         if ($result) {
-            echo "Announcement updated successfully";
+        
+             echo "Announcement updated successfully";
+            
+            exit();
         } else {
             echo "Failed to update announcement";
         }

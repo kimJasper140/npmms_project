@@ -1,6 +1,7 @@
 <?php
 include "../config/config.php";
-include "../config/session.php";
+//include "../config/session.php";
+include "barpage/sidebar.php";
 
 if (!isset($_SESSION['username']) || $_SESSION['roles'] != 'stall_owner') {
     header("location:../index.php");
@@ -54,8 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($insertResult) {
         // Stall information added successfully, redirect to profile page
-        header("location: profile.php");
-        exit();
+        exit(header("Location:profile.php"));
+        
+        
+
     } else {
         die("Error adding stall information: " . mysqli_error($conn));
     }
@@ -68,14 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <title>Stall Information</title>
     <!-- Add Bootstrap CSS link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
+       
 
         .container {
             max-width: 600px;
@@ -167,8 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-footer">Fill in the form to complete your stall information.</div>
     </div>
 
-    <!-- Add Bootstrap JS and jQuery links -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   
+   
 </body>
 </html>

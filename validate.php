@@ -59,7 +59,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     }
                 } elseif ($role == 'stall_owner')   {
                     if ($status == 'active' || $status == 'Active') {
-                        header("Location: stall/stall_dashboard.php");
+                        header("Location: stall/profile.php");
                     } elseif ($status == 'terminate') {
                         header("Location: login.php?error=Account Terminated");
                     } elseif ($status == 'inactive') {

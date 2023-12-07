@@ -98,9 +98,7 @@ $resultFeedback = mysqli_query($conn, $queryFeedback);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<?php
-include "barpage/topbar.php";
-?>
+
     <h1>Past Feedback</h1>
 
     <div class="feedback-container">
@@ -123,5 +121,10 @@ include "barpage/topbar.php";
             <p class="no-feedback">No past feedback found.</p>
         <?php } ?>
     </div>
+    <!-- Button to go back to the main page -->
+<div style="text-align: center; margin-top: 20px;">
+    <a href="feedback.php"
+        style="padding: 10px 20px; background-color: #007BFF; color: #fff; text-decoration: none; border-radius: 4px; font-weight: bold;">Back</a>
+</div>
 </body>
 </html>

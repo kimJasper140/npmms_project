@@ -17,8 +17,8 @@
 
     .loader-spinner {
       position: absolute;
-      top: 50%;
-      left: 47%;
+      top: 40%;
+      left: 45%;
       transform: translate(-50%, -50%);
       border: 8px solid #ccc;
       border-top: 8px solid #3498db;

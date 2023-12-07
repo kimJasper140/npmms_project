@@ -1,6 +1,7 @@
 <?php
-session_start();
+
 include "../config/config.php";
+include "barpage/sidebar.php";
 
 // Replace this with the correct session variable that holds the logged-in user's ID
 $loggedInUserId = $_SESSION['id'];
@@ -48,7 +49,7 @@ if (isset($_POST["submit"])) {
 <head>
     <title>Maintenance Report</title>
     <style>
-        body {
+        /* body {
             font-family: Arial, sans-serif;
             margin: 0;
           
@@ -58,7 +59,7 @@ if (isset($_POST["submit"])) {
         h1 {
             text-align: center;
             margin-bottom: 30px;
-        }
+        } */
 
         .form-container {
             max-width: 600px;
@@ -105,7 +106,7 @@ if (isset($_POST["submit"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h1>Maintenance Report</h1>
+    <h1 style="text-align: center;">Maintenance Report</h1>
 
     <div class="form-container">
         <form action="" method="POST">
@@ -145,6 +146,9 @@ if (isset($_POST["submit"])) {
             Past Maintenance Reports</a>
     </div>
 
- 
+    <script src="barpage/js/jquery.min.js"></script>
+    <script src="barpage/js/popper.js"></script>
+    <script src="barpage/js/bootstrap.min.js"></script>
+    <script src="barpage/js/main.js"></script>
 </body>
 </html>

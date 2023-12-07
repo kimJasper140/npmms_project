@@ -1,5 +1,5 @@
 <?php
-session_start();
+include "barpage/sidebar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,23 +8,11 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment History</title>
-    <!-- Add Bootstrap CSS link -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        
-        @media (max-width: 768px) {
-            body {
-        margin-top:7%;
-        padding-top: 10%;
-            }
-            
-        }
-    </style>
+    
+
 </head>
-<?php
-include "barpage/topba.php";
-?>
-<body style="margin-top:7%;">
+
+<body >
     <div class="container">
         <?php
         // Check if the user is logged in
@@ -95,11 +83,11 @@ include "barpage/topba.php";
         $conn->close();
         ?>
     </div>
-    
-    <!-- Add Bootstrap JS and jQuery if needed -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="barpage/js/jquery.min.js"></script>
+    <script src="barpage/js/popper.js"></script>
+    <script src="barpage/js/bootstrap.min.js"></script>
+    <script src="barpage/js/main.js"></script>
+   
 </body>
 
 </html> 

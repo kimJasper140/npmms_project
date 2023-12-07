@@ -48,6 +48,11 @@
     .signature {
       font-weight: bold;
     }
+    @media (max-width: 776px) {
+            .custom-body {
+                margin-top: 100px;
+            }
+        }
   </style>
 </head>
 

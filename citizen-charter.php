@@ -1,14 +1,21 @@
+
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Municipality of Naujan Operation of the Market CITIZEN'S CHARTER</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
+        /* body {
             font-family: Arial, sans-serif;
             margin: 20px;
 
-        }
+        } */
 
+        .custom-css {
+                margin-top: 130px;
+            }
         h1, h2, h3 {
             margin-top: 0;
         }
@@ -24,33 +31,27 @@
             padding: 8px;
         }
 
-        th {
+         th {
             background-color: #f2f2f2;
         }
 
-        p, ul {
-            margin: 0;
-            margin-bottom: 10px;
-        }
-        .custom-css{
-            width: 90%;
-            margin-left: 15%;
-            margin-top: 10%;
-            margin-right: 5%;
-           
-
+        
+        @media (max-width: 776px) {
+            .custom-css {
+                margin-top: 130px;
+            }
         }
     </style>
 </head>
+
+<body>
 <?php 
 include "header-home.php";
 ?>
-<body>
-
-    <div class="custom-css">
-    <h1 style="margin-left:2%;">Municipality of Naujan Operation<br> of the Market CITIZEN'S CHARTER</h1>
+    <div class="container-fluid custom-css">
+    <h1>Municipality of Naujan Operation<br> of the Market CITIZEN'S CHARTER</h1>
     <h2>1. Payment of Monthly Stall Fee - Monthly Payment of Stall Fee</h2>
-    <table>
+    <table class="table-responsive">
         <tr>
             <th>Office</th>
             <th>Classification</th>
@@ -72,7 +73,7 @@ include "header-home.php";
     <p>None</p>
 
     <h3>CLIENT STEP</h3>
-    <table>
+    <table class="container-fluid table-responsive">
         <tr>
             <th>UNIT</th>
             <th>ACTION</th>
@@ -89,7 +90,7 @@ include "header-home.php";
 
     <h3>FEES TO BE PAID</h3>
     <p>Processing Time: 2 minutes</p>
-    <table>
+    <table class=" container-fluid table-responsive">
         <tr>
             <th>Stall Fee</th>
             <th>Amount</th>
@@ -129,7 +130,7 @@ include "header-home.php";
     </table>
 
     <h2>2. Request for Certification - Certification from the Market Supervisor</h2>
-    <table>
+    <table class=" container-fluid table-responsive">
         <tr>
             <th>Office</th>
             <th>Classification</th>
@@ -151,7 +152,7 @@ include "header-home.php";
     <p>None</p>
 
     <h3>CLIENT STEP</h3>
-    <table>
+    <table class="container-fluid table-responsive">
         <tr>
             <th>UNIT</th>
             <th>ACTION</th>
@@ -172,7 +173,7 @@ include "header-home.php";
 
     <h3>FEES TO BE PAID</h3>
     <p>Processing Time: 3 minutes</p>
-    <table>
+    <table class="container-fluid table-responsive">
         <tr>
             <th>Certification Fee</th>
             <th>Amount</th>
@@ -194,4 +195,8 @@ include "header-home.php";
     </ul>
     </div>
 </body>
+ <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script> -->
+
+  
 </html>

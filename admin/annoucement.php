@@ -1,25 +1,16 @@
 <?php
 include "../config/config.php";
 include "checking_user.php";
+
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Announcements | admin</title>
-    <link rel="stylesheet" type="text/css" href="../tempplate/side-bar.css">
     <link rel="icon" href="../image/logo.ico" type="image/x-icon">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F2F2F2;
-            margin: 0;
-            margin-top: 25px;
-        }
+      
 
         h1 {
             color: #006400;
@@ -71,9 +62,10 @@ include "checking_user.php";
 
         .form-container {
             background-color: #FFF;
-            padding: 20px;
+            padding: 30px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin:10px;
         }
 
         .form-container label {
@@ -166,15 +158,6 @@ include "checking_user.php";
         }
     </style>
     <script>
-        function logout() {
-            var confirmed = confirm('Are you sure you want to log out?');
-            if (confirmed) {
-                window.location.href = '../logout.php';
-            } else {
-                // Do nothing
-            }
-        }
-
         function deleteAnnouncement(id) {
             var confirmed = confirm('Are you sure you want to Hide this announcement?');
             if (confirmed) {
@@ -223,6 +206,7 @@ include "checking_user.php";
                 xhr.open('POST', '../admin-functions/update_announcement.php', true);
                 xhr.onload = function() {
                     if (xhr.status === 200) {
+                        
                         alert(xhr.responseText); // Show the response message
                         modal.style.display = 'none'; // Close the modal
                     } else {
@@ -236,12 +220,14 @@ include "checking_user.php";
 </head>
 
 <body>
-    <?php include "sidebar-admin.php"; ?>
-    <div class="content">
+<?php
+include "../admin/sidebar/sidebar.php";
+?>
+    <div class="container-fluid content">
     
-        <h1 style="margin-top:5%;">Announcements</h1>
+        <h2>Announcements</h2>
         
-        <button class="btn btn-secondary" style="float:rigth;margin-left:90%;" onclick="window.location.href='../admin/archived-announcement.php'">Go to Archived</button>
+        <button class="btn btn-secondary"  onclick="window.location.href='../admin/archived-announcement.php'">Go to Archived</button>
        
         <hr>
         <div class="form-container">
@@ -251,13 +237,15 @@ include "checking_user.php";
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" required>
 
+                
                 <label for="content">Content:</label>
-                <textarea id="content" name="content" rows="4" required></textarea>
-
+                <div class="form-floating mb-5">
+                <textarea id="content"style="min-height: 20vh" name="content" rows="1" required></textarea>
+                </div>
                 <label for="image">Image:</label>
                 <input type="file" id="image" name="image" accept="image/*" required>
 
-                <input type="submit" value="Post Announcement" style="margin-left:50%;">
+                <input class="btn btn-success" style="float:right;" type="submit" value="Post Announcement">
             </form>
         </div>
 
@@ -277,10 +265,10 @@ include "checking_user.php";
                 <h2 id="title_<?php echo $id; ?>"><?php echo $title; ?></h2>
                 <div class="action-btns">
                     <button onclick="openEditModal(<?php echo $id; ?>)">
-                        <i class="fas fa-edit"></i>Edit
+                        <i class="bi bi-pencil-square"></i>Edit
                     </button>
                     <button onclick="deleteAnnouncement(<?php echo $id; ?>)">
-                        <i class="fas fa-trash-alt"></i>Archive
+                        <i class="bi bi-trash"></i>Archive
                     </button>
                 </div>
                 <p id="content_<?php echo $id; ?>"><?php echo $content; ?></p>
@@ -323,6 +311,10 @@ include "checking_user.php";
         
     </script>
 </body>
+    <script src="sidebar/js/jquery.min.js"></script>
+    <script src="sidebar/js/popper.js"></script>
+    <script src="sidebar/js/bootstrap.min.js"></script>
+    <script src="sidebar/js/main.js"></script>
 
 </html>
 

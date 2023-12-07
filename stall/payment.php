@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include("../config/config.php");
 
 $sqlimage = "SELECT content FROM `resources` WHERE `id` = 5";
@@ -15,12 +15,12 @@ $recipientImage = mysqli_fetch_assoc($result);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Form</title>
     <link rel="icon" href="../image/logo.ico" type="image/x-icon">
-    <!-- Add Bootstrap CSS link -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   
+   
 </head>
 
-<body class="body" style="margin-bottom:5%;">
-    <?php include "barpage/topba.php"; ?>
+<body class="body"">
+    <?php include "barpage/sidebar.php"; ?>
 
     <div class="container mt-4">
         <h4 class="text-center">Pay here</h4>
@@ -74,7 +74,7 @@ $recipientImage = mysqli_fetch_assoc($result);
                 <label for="amount">Amount:</label>
                 <input type="number" class="form-control" id="amount" name="amount" required>
             </div>
-            <p class="text-center"><i>Screen Capture your Proof of payment (admin will verify)</i></p>
+            <p class="text-center"><i>Please Capture the Proof payment Clear(admin will verify)</i></p>
             <div class="form-group">
                 <label for="image">Image:</label>
                 <input type="file" class="form-control-file" id="image" name="image" required>
@@ -89,10 +89,7 @@ $recipientImage = mysqli_fetch_assoc($result);
 
     </div>
 
-    <!-- Add Bootstrap JS and jQuery if needed -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
 
 </body>
 

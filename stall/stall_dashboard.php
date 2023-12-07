@@ -115,7 +115,7 @@ $unreadCount = $countRow['unread_count'];
     </style>
 </head>
 <?php
-include "barpage/topbar.php";
+//include "barpage/topbar.php";
 include "contract_remider.php";
 ?>
 <body>
@@ -124,10 +124,6 @@ include "contract_remider.php";
 
         <div class="dashboard">
             <!-- Place this inside the <body> tag -->
-<div id="paymentReminder" class="alert alert-danger" style="color: red; display: none;">
-    Monthly payment reminder: Please make the payment before the 20th of this month.
-    
-</div>
 
 <script>
 // Function to check if it's three days before the 20th of the month
@@ -184,19 +180,19 @@ $(document).ready(function () {
 
 </script>
 
-            <p>Welcome, <?php echo $_SESSION['username']; ?>!</p>
+            <!-- <p>Welcome, <?// echo $_SESSION['username']; ?>!</p>
             <a class="customA" href="profile.php">Profile</a></li>
             <a class="customA" href="transactions.php">Transaction</a></li>
-                <a class="customA" href="violation.php">Stall Violation</a></li>
+                <a class="customA" href="violation.php">Stall Violation</a></li> -->
                 <a class="customA" href="notification.php" id="notification-link" onclick="clearNotificationBadge()">
     <i class=""></i>Notification
     <span class="badge" id="notification-badge"><?php echo ($unreadCount > 0) ? $unreadCount : ''; ?></span>
 </a>
 
-                <a class="customA" href="maintainance.php">Maintenance Reports</a></li>
+                <!-- <a class="customA" href="maintainance.php">Maintenance Reports</a></li>
                 <a class="customA" href="feedback.php">Feedback</a></li>
                 <a class="customA" href="profile-setting.php">Account Settings</a></li>
-                <a class="customA" href="../logout.php">Logout</a></li>
+                <a class="customA" href="../logout.php">Logout</a></li> -->
         </div>
     </div>
 </body>

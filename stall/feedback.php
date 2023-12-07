@@ -1,6 +1,6 @@
 <?php
 include "../config/config.php";
-include "../config/session.php";
+include "barpage/sidebar.php";
 
 // Retrieve the stall owner's information
 $userId = $_SESSION['id'];
@@ -29,18 +29,18 @@ if (isset($_POST['submit'])) {
 <head>
     <title>Stall Feedback</title>
     <style>
-        body {
+        /* body {
             font-family: Arial, sans-serif;
             margin-bottom: 0;
             
-            background-color: #f2f2f2;
+            
         }
 
         h1 {
             text-align: center;
             margin-bottom: 30px;
             padding-top:5%;
-        }
+        } */
 
         .form-container {
             max-width: 600px;
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
             border-radius: 4px;
             padding: 20px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            margin-top:8% ;
+            
         }
 
         .form-container form label {
@@ -88,9 +88,7 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <?php
-    include "barpage/topbar.php";
-    ?>
+  
    
 
     <div class="form-container">
@@ -115,4 +113,8 @@ if (isset($_POST['submit'])) {
         <a href="view_feedback.php" style="padding: 10px 20px; background-color: #007BFF; color: #fff; text-decoration: none; border-radius: 4px; font-weight: bold;">View Past Feedback</a>
     </div>
 </body>
+<script src="barpage/js/jquery.min.js"></script>
+    <script src="barpage/js/popper.js"></script>
+    <script src="barpage/js/bootstrap.min.js"></script>
+    <script src="barpage/js/main.js"></script>
 </html>

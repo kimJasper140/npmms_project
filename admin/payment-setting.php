@@ -55,6 +55,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" href="../image/logo.ico" type="image/x-icon">
     <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+    /* Custom style to set a fixed size for images */
+    .equal-size-img {
+      width: 300px;
+      height: 300px; /* Set the desired height for your images */
+      object-fit: cover; /* Maintain aspect ratio and cover the container */
+    }
+  </style>
 </head>
 
 <body class="body" style="margin-bottom:5%;">
@@ -64,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Use the dynamic image source -->
             <?php
             if (!empty($recipientImage['content'])) {
-                echo '<img class="custom-icon" src="' . $recipientImage['content'] . '" alt="Profile Picture">';
+                echo '<img class="custom-icon equal-size-img" src="' . $recipientImage['content'] . '" alt="Profile Picture">';
             } else {
                 echo '<img class="custom-icon" src="profile/default.jpeg" alt="Default Profile Picture">';
             }

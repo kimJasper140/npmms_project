@@ -1,8 +1,7 @@
 <?php
 include "../config/config.php";
 include "checking_user.php";
-
-    ?>
+?>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -11,26 +10,13 @@ include "checking_user.php";
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>User Management | Admin</title>
         <link rel="icon" href="../image/logo.ico" type="image/x-icon">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+       
+        
 
     </head>
-    
+   
   <script>
-    function logout() {
-      // Display a confirmation message
-      var confirmed = confirm('Are you sure you want to log out?');
 
-      // If the user confirms, redirect to the logout page
-      if (confirmed) {
-        window.location.href = '../logout.php';
-      }
-      else {
-        //
-      }
-    }
     function checkNameValidity() {
             var name = document.getElementById("name_").value;
             var nameMessage = document.getElementById("nameValidity");
@@ -88,7 +74,11 @@ include "checking_user.php";
         }
   </script>
     <body>
-
+    
+    <?php
+    include "../admin/sidebar/sidebar.php";
+    ?>
+    
     <?php
     function isValidName($name_) {
         return preg_match("/^[A-Za-z\-\'\s]+$/", $name_);
@@ -113,7 +103,7 @@ include "checking_user.php";
         return true;
     }
 
-    include "../config/config.php";
+  
     //include "../admin/sidebar-admin.php";
 
     $sql = "SELECT * FROM user where status = 'active'";
@@ -199,18 +189,19 @@ include "checking_user.php";
     }
     ?>
 
-        <div class="container mt-5"">
-            <h2 style="margin-left:10%;">User Management</h2>
+        
+            <h2>User Management</h2>
             <div class="text-right mb-3">
                 <div class="text-right mb-3">
                    
                 </div>
 
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
-                    <i class="fas fa-plus"></i> Create Account
+                <button type="button"  class="btn btn-secondary" data-toggle="modal" data-target="#addUserModal">
+                    <i class="bi bi-plus"></i> Create Account
                 </button>
 
             </div>
+            <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
@@ -221,7 +212,6 @@ include "checking_user.php";
                         <th>Username</th>
                         <th>Role</th>
                         <th>Designation</th>
-                        <th>Status</th>
                         <th class="action-column">Action</th>
                     </tr>
                 </thead>
@@ -254,13 +244,9 @@ include "checking_user.php";
                                     <?php echo $row['designation']; ?>
                                 </td>
                                 <td>
-                                    <i class="fas fa-circle status-inactive success"></i>
-                                    <?php echo $row['status']; ?>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-primary btn-action" data-toggle="modal"
+                                    <button type="button" class="btn btn-secondary btn-action" data-toggle="modal"
                                         data-target="#editUserModal<?php echo $row['user_id']; ?>">
-                                        <i class="fas fa-edit fa-xs"></i>
+                                        <i class="bi bi-edit fa-xs"></i>
                                     </button>
                                     <button type="button" class="btn btn-danger btn-action" data-toggle="modal"
                                         data-target="#deactivateUserModal<?php echo $row['user_id']; ?>">
@@ -314,7 +300,7 @@ include "checking_user.php";
                 <div class="modal-footer">
                     <input type="hidden" name="userId" value="<?php echo $row['user_id']; ?>">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" name="editUser" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" name="editUser" class="btn btn-success">Save Changes</button>
                 </div>
             </form>
         </div>
@@ -355,7 +341,8 @@ include "checking_user.php";
                     ?>
                 </tbody>
             </table>
-        </div>
+            
+       
 
         <!-- Add User Modal -->
         <div id="addUserModal" class="modal fade">
@@ -406,21 +393,21 @@ include "checking_user.php";
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" name="addUser" class="btn btn-primary">Add User</button>
+                            <button type="submit" name="addUser" class="btn btn-secondary">Add User</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.css" rel="stylesheet" />
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.js"></script>
-
+ 
+    
+<link href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.3/datatables.min.js"></script>
+    <script src="sidebar/js/popper.js"></script>
+    <script src="sidebar/js/bootstrap.min.js"></script>
+    <script src="sidebar/js/main.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('table').DataTable({
